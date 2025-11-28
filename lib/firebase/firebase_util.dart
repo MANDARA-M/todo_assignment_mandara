@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart' show kIsWeb, PlatformDispatcher;
@@ -19,24 +20,28 @@ class PlatformHandler {
     if (kIsWeb) {
       runApp(app);
     } else {
-      await runZonedGuarded(() async {
-        WidgetsFlutterBinding.ensureInitialized();
-        await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      await runZonedGuarded(
+        () async {
+          WidgetsFlutterBinding.ensureInitialized();
+          await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+          await FirebaseAuth.instance.setSettings(forceRecaptchaFlow: false);
 
-        FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+          FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-        // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-        PlatformDispatcher.instance.onError = (error, stack) {
-          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-          return true;
-        };
+          // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+          PlatformDispatcher.instance.onError = (error, stack) {
+            FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+            return true;
+          };
 
-        await EventLogger.instance.initialize();
+          await EventLogger.instance.initialize();
 
-        runApp(app);
-      }, (error, stackTrace) {
-        FirebaseCrashlytics.instance.recordError(error, stackTrace);
-      });
+          runApp(app);
+        },
+        (error, stackTrace) {
+          FirebaseCrashlytics.instance.recordError(error, stackTrace);
+        },
+      );
     }
   }
 }

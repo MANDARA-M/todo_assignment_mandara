@@ -41,7 +41,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
 
   var _timerRunCount = -1;
   var _timeLeft = 0;
-  final _otpLength = 4;
+  final _otpLength = 6;
   final _timerDefaultValue = 60;
   final _timerMaxRunCount = 3;
 
@@ -64,17 +64,40 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
   @override
   void initState() {
     super.initState();
-    _focusNode.requestFocus();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode.requestFocus();
+      final provider = ref.read(authProvider);
+      provider.addListener(_onProviderChange);
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
+
+    ref.read(authProvider).removeListener(_onProviderChange);
     if (_timer?.isActive ?? false) {
       _timer?.cancel();
     }
     _otpController.dispose();
     _focusNode.dispose();
+  }
+
+  void _onProviderChange() {
+    _otpVerificationState = _authProvider.otpVerificationState;
+
+    switch (_otpVerificationState) {
+      case OtpVerificationState.initial:
+      case OtpVerificationState.loading:
+        break;
+      case OtpVerificationState.success:
+        AppUtils.instance.configApp(context: context);
+        break;
+      case OtpVerificationState.failure:
+        ToastUtils.instance.showToastRelease(message: 'Invalid OTP');
+        break;
+    }
   }
 
   void _startTimer() {
@@ -188,19 +211,19 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
         appContext: context,
         focusNode: _focusNode,
         pastedTextStyle: TextStyle(color: Colors.green.shade600, fontWeight: FontWeight.bold),
-        length: 4,
+        length: _otpLength,
         blinkWhenObscuring: true,
         animationType: AnimationType.fade,
         cursorHeight: 30.0,
-        textStyle: _theme.ts.extTs36.colorTsThemeBlack.weightRegular,
+        textStyle: _theme.ts.extTs32.colorTsThemeBlack.weightRegular,
         pinTheme: PinTheme(
           activeColor: AppColor.lightGrey,
           inactiveColor: AppColor.lightGrey,
           selectedColor: AppColor.lightGrey,
           shape: PinCodeFieldShape.underline,
           borderRadius: BorderRadius.circular(5),
-          fieldHeight: 50,
-          fieldWidth: 80,
+          fieldHeight: 45,
+          fieldWidth: 45,
           activeFillColor: Colors.transparent,
         ),
         //cursorColor: Colors.black,
@@ -230,17 +253,5 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
     }
 
     await _authProvider.verifyOtp(otp: _otpController.text);
-
-    switch (_otpVerificationState) {
-      case OtpVerificationState.initial:
-      case OtpVerificationState.loading:
-        break;
-      case OtpVerificationState.success:
-        AppUtils.instance.configApp(context: context);
-        break;
-      case OtpVerificationState.failure:
-        ToastUtils.instance.showToastRelease(message: 'Invalid OTP');
-        break;
-    }
   }
 }

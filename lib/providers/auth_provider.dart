@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:inSTA/utilities/print_util.dart';
 
 import '../enums/app_enums.dart';
 import '../firebase/appInsights/event_logger.dart';
@@ -64,15 +65,18 @@ class AuthProvider extends ChangeNotifier {
 
   void _changeLoginState({required LoginState state}) {
     _loginState = state;
+    PrintUtils.instance.printWarning('_changeLoginState() -> $state');
     notifyListeners();
   }
 
   Future<void> login({required String phone}) async {
     _changeLoginState(state: LoginState.loading);
 
+    final formattedPhone = '+91$phone';
+
     try {
       await _auth.verifyPhoneNumber(
-        phoneNumber: phone,
+        phoneNumber: formattedPhone,
         forceResendingToken: _forceResendToken,
         timeout: Duration(seconds: 60),
         verificationCompleted: (PhoneAuthCredential credential) async {

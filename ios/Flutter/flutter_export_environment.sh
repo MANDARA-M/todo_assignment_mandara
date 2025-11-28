@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/Users/munish.kumar/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/munish.kumar/Desktop/workspace/flutter/mandara/assignment/todo_assignment_mandara"
+export "FLUTTER_APPLICATION_PATH=/Users/munish.kumar/Desktop/workspace/flutter/mandara/assignment/todo_assignment_mandara_27_nov_2025"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"

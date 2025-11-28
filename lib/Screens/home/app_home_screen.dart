@@ -66,7 +66,7 @@ class AppHomeScreenState extends ConsumerState<AppHomeScreen> with AutomaticKeep
     }
 
     return Scaffold(
-      appBar: const AppBarWidget(title: '', isDashboard: true),
+      appBar: const AppBarWidget(title: 'Tasks', isDashboard: true),
       body: TabsApplication(
         tabMetaData: tabMetaData,
         isTabScrollable: false,

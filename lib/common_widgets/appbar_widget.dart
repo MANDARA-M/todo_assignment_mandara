@@ -51,7 +51,7 @@ class AppBarWidget extends HookConsumerWidget implements PreferredSizeWidget {
       toolbarHeight: height,
       key: key,
       titleSpacing: 2,
-      title: isDashboard ? _appIconWidget : overrideTitle ?? Text(title ?? '', style: theme.ts.extTs16.height24.copyWith(color: titleColor)),
+      title:overrideTitle ?? Text(title != null ?'\t\t$title' : '', style: theme.ts.extTs24.height24.copyWith(color: titleColor)),
       elevation: elevation,
       actions: _actions(context: context, auth: auth, theme: theme),
       centerTitle: centerTitle,

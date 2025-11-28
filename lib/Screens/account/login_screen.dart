@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:inSTA/navigation/navigation_utils.dart';
 
 import '../../common_widgets/appbar_widget.dart';
 import '../../common_widgets/button_widget.dart';
@@ -12,6 +13,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
 import '../../theme/theme_utils.dart';
+import '../../utilities/print_util.dart';
 
 class LoginScreen extends StatefulHookConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,10 +22,10 @@ class LoginScreen extends StatefulHookConsumerWidget {
   ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> with WidgetsBindingObserver {
   final _focusNode = FocusNode();
 
-  final _numberController = TextEditingController();
+  final _numberController = TextEditingController(text: '1000000001');
 
   bool get isNumberValid {
     return _numberController.text.length == 10;
@@ -34,17 +36,66 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   late LoginState _loginState;
 
+  String get phoneNumber => _numberController.text;
+
   @override
   void initState() {
     super.initState();
-    _focusNode.requestFocus();
+
+    WidgetsBinding.instance.addObserver(this);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode.requestFocus();
+      _addObserver();
+    });
+  }
+
+  void _addObserver() {
+    final provider = ref.read(authProvider);
+    provider.addListener(_onProviderChange);
+  }
+
+  void _removeObserver() {
+    ref.read(authProvider).removeListener(_onProviderChange);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    PrintUtils.instance.printLog('Login Screen - AppLifecycleState: $state');
+    if (state == AppLifecycleState.resumed) {
+      _addObserver();
+    } else if (state == AppLifecycleState.inactive) {
+      _removeObserver();
+    }
   }
 
   @override
   void dispose() {
-    super.dispose();
+    _removeObserver();
+    WidgetsBinding.instance.removeObserver(this);
     _numberController.dispose();
     _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _onProviderChange() {
+    _loginState = _authProvider.loginState;
+
+    switch (_loginState) {
+      case LoginState.initial:
+      case LoginState.loading:
+        break;
+      case LoginState.success:
+        NavigationUtils.instance.checkAppStateAndProceedFurther(this, auth: _authProvider);
+        break;
+      case LoginState.failure:
+        break;
+      case LoginState.codeSent:
+        NavigationUtils.instance.moveToOTPScreen(context, phoneNumber: phoneNumber);
+        break;
+      case LoginState.timeout:
+        break;
+    }
   }
 
   @override
@@ -136,21 +187,5 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 
-  Future<void> _eventLogin() async {
-    await _authProvider.login(phone: _numberController.text);
-
-    switch (_loginState) {
-      case LoginState.initial:
-      case LoginState.loading:
-        break;
-      case LoginState.success:
-        break;
-      case LoginState.failure:
-        break;
-      case LoginState.codeSent:
-        break;
-      case LoginState.timeout:
-        break;
-    }
-  }
+  Future<void> _eventLogin() async => _authProvider.login(phone: phoneNumber);
 }
