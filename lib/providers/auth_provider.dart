@@ -1,90 +1,147 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../enums/app_enums.dart';
 import '../firebase/appInsights/event_logger.dart';
 import '../navigation/navigation_utils.dart';
-import '../network/models/response/login/response_login.dart';
-import '../network/models/response/user/response_user.dart';
-import '../network/models/response/user/user.dart';
 import '../utilities/storage/shared_preference/shared_preferences_util.dart';
 
-typedef LoginSuccess = void Function(ResponseUserData? session);
+typedef LoginSuccess = void Function(User? user);
 typedef NotLoggedIn = void Function();
 
 class AuthProvider extends ChangeNotifier {
-  ResponseUserData? _session = SharedPreferencesUtil.instance.sessionData;
+  final _auth = FirebaseAuth.instance;
 
-  ResponseUserData? get session => _session;
+  LoginState _loginState = LoginState.initial;
 
-  User? get user => _session?.user;
+  LoginState get loginState => _loginState;
 
-  int get userId => user?.userId ?? 0;
+  OtpVerificationState _otpVerificationState = OtpVerificationState.initial;
 
-  bool get isUserLoggedIn => _session?.isUserLoggedIn ?? false;
+  OtpVerificationState get otpVerificationState => _otpVerificationState;
+
+  String? _verificationId;
+  int? _forceResendToken;
+
+  User? _user = SharedPreferencesUtil.instance.user;
+
+  User? get user => _user;
+
+  String get userId => SharedPreferencesUtil.instance.userId;
+
+  bool get isUserLoggedIn => SharedPreferencesUtil.instance.isLogin;
 
   bool get isUserNotLoggedIn => !isUserLoggedIn;
 
-  Future<void> initialize() async {
-    _session = SharedPreferencesUtil.instance.sessionData;
+  Future<void> initializeUser() async {
+    _user = SharedPreferencesUtil.instance.user;
 
-    if (_session != null) {
-      await setSession(_session!, refresh: false);
+    if (_user != null) {
+      await _setSession(_user!, refresh: false);
     } else {}
   }
 
+  Future<void> _setSession(User user, {bool refresh = true}) async {
+    final mobile = user.phoneNumber;
+    if (mobile != null) {
+      await EventLogger.instance.setSession(phoneNumber: mobile);
+      if (refresh) {
+        notifyListeners();
+      }
+    }
+  }
+
   void observerLogin(BuildContext context, {LoginSuccess? loginSuccess, NotLoggedIn? notLoggedIn}) {
-    if (isUserLoggedIn && session?.user.userId != null) {
-      loginSuccess?.call(_session);
+    if (isUserLoggedIn) {
+      loginSuccess?.call(_user);
     } else {
       notLoggedIn?.call();
       NavigationUtils.instance.moveToLoginScreen(context: context);
     }
   }
 
-  Future<ResponseLogin?> login(String mobile) async {
-    return null;
+  void _changeLoginState({required LoginState state}) {
+    _loginState = state;
+    notifyListeners();
   }
 
-  Future<void> resendOtp({required String mobile}) async {}
+  Future<void> login({required String phone}) async {
+    _changeLoginState(state: LoginState.loading);
 
-  Future<ResponseUserData?> verifyOtp({required String mobile, required String otp}) async {
-    return null;
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: phone,
+        forceResendingToken: _forceResendToken,
+        timeout: Duration(seconds: 60),
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          try {
+            final userCredential = await _auth.signInWithCredential(credential);
+            if (userCredential.user != null) {
+              initializeUser();
+              _changeLoginState(state: LoginState.success);
+            }
+          } catch (e) {
+            _changeLoginState(state: LoginState.failure);
+          }
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          _changeLoginState(state: LoginState.failure);
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          _verificationId = verificationId;
+          _forceResendToken = resendToken;
+          _changeLoginState(state: LoginState.codeSent);
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          _verificationId = verificationId;
+          _changeLoginState(state: LoginState.timeout);
+        },
+      );
+    } catch (e) {
+      _changeLoginState(state: LoginState.failure);
+    }
   }
 
-  Future<void> setSession(ResponseUserData userData, {bool refresh = true}) async {
-    if (_session != null) {
-      userData.token ??= _session!.token;
-      userData.refreshToken ??= _session!.refreshToken;
+  Future<void> resendOtp({required String mobile}) async => login(phone: mobile);
+
+  void _changeOtpVerificationState({required OtpVerificationState state}) {
+    _otpVerificationState = state;
+    notifyListeners();
+  }
+
+  Future<void> verifyOtp({required String otp}) async {
+    if (_verificationId == null) {
+      return;
     }
 
-    _session = userData;
+    _changeOtpVerificationState(state: OtpVerificationState.loading);
 
-    await SharedPreferencesUtil.instance.setSession(userData);
-    await EventLogger.instance.setSession(phoneNumber: userData.user.mobile);
-    if (refresh) {
-      notifyListeners();
-    }
-  }
+    try {
+      final credential = PhoneAuthProvider.credential(verificationId: _verificationId!, smsCode: otp);
 
-  void setUser(User? user) {
-    if (user != null) {
-      _session?.setUser(user);
-      if (session != null) {
-        setSession(_session!);
+      final userCredential = await _auth.signInWithCredential(credential);
+      if (userCredential.user != null) {
+        initializeUser();
+        _changeOtpVerificationState(state: OtpVerificationState.success);
       }
+    } on FirebaseAuthException catch (e) {
+      _changeOtpVerificationState(state: OtpVerificationState.failure);
+    } catch (e) {
+      _changeOtpVerificationState(state: OtpVerificationState.failure);
     }
   }
 
   Future<void> _logoutSession() async {
-    _session = null;
+    _verificationId = null;
+    _user = null;
     await EventLogger.instance.setSession(phoneNumber: '');
     notifyListeners();
   }
 
   Future<void> logout(BuildContext context) async {
-    final userMobile = user?.mobile;
-    // Firebase call to logout
+    await FirebaseAuth.instance.signOut();
     await SharedPreferencesUtil.instance.logout();
     await _logoutSession();
   }

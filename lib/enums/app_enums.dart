@@ -1,5 +1,3 @@
-
-
 class AppEnums {}
 
 enum BottomSheetEventOptionsUI { poppins, listTile }
@@ -14,3 +12,11 @@ enum Language {
   final String languageCode;
   final String languageName;
 }
+
+enum TodoScreenType { created, joined }
+
+enum ProviderState { initial, loading, success, failure, empty }
+
+enum LoginState { initial, loading, success, failure, codeSent, timeout }
+
+enum OtpVerificationState { initial, loading, success, failure }

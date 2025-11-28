@@ -71,7 +71,7 @@ class _InitializerWidgetState extends ConsumerState<InitializerWidget> {
       Constant.instance.init(context);
     }
 
-    await auth.initialize();
+    await auth.initializeUser();
 
     if (mounted) {
       await AppUtils.instance.configApp(context: context);

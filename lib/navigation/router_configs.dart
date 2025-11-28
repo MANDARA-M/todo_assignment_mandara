@@ -6,7 +6,6 @@ import '../Screens/home/dashboard_screen.dart';
 import '../Screens/profile/profile_screen.dart';
 import '../Screens/splash/onboarding_screen.dart';
 import '../Screens/splash/splash_screen.dart';
-import '../network/models/response/login/response_login.dart';
 import '../utilities/app_utils.dart';
 import '../wrapper/connectivity_widget_wrapper.dart';
 import 'animated_page_transitions.dart';
@@ -25,8 +24,8 @@ class RouterConfigs {
       AppRoute.onboarding.getAnimatedRoute(builder: (context, state) => const OnBoardingScreen()),
       AppRoute.login.getAnimatedRoute(builder: (context, state) => const LoginScreen()),
       AppRoute.otp.getAnimatedRoute(builder: (context, state) {
-        final responseLogin = state.extra! as ResponseLogin;
-        return OTPScreen(responseLogin: responseLogin);
+        final phoneNumber = state.extra! as String;
+        return OTPScreen(phoneNumber: phoneNumber);
       }),
       AppRoute.dashboard.getAnimatedRoute(builder: (context, state) => const DashboardScreen()),
       AppRoute.profile.getAnimatedRoute(builder: (context, state) {

@@ -4,7 +4,6 @@ import '../common_widgets/issue_screen.dart';
 import '../enums/app_enums.dart';
 import '../gen/assets.gen.dart';
 import '../l10n/app_localizations.dart';
-import '../network/models/response/login/response_login.dart';
 import '../providers/auth_provider.dart';
 import '../utilities/extension_utils.dart';
 import '../utilities/print_util.dart';
@@ -66,7 +65,7 @@ class NavigationUtils extends NavigationUtilsBase {
   void moveToLoginScreen({required BuildContext context, bool isRemoveAllOtherScreens = false}) =>
       moveToRoute(context: context, route: AppRoute.login, isRemoveAllOtherScreens: isRemoveAllOtherScreens);
 
-  void moveToOTPScreen(BuildContext context, ResponseLogin responseLogin) => moveToRoute(context: context, route: AppRoute.otp, extra: responseLogin);
+  void moveToOTPScreen(BuildContext context, {required String phoneNumber}) => moveToRoute(context: context, route: AppRoute.otp, extra: phoneNumber);
 
   void moveToHomeScreen({required BuildContext context}) => moveToRoute(context: context, route: AppRoute.dashboard, isRemoveAllOtherScreens: true);
 

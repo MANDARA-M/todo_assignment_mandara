@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:uuid/uuid.dart';
 
-import '../network/models/response/user/user.dart';
 import 'storage/shared_preference/shared_preferences_util.dart';
 
 class AppUtils {
@@ -38,9 +37,6 @@ class AppUtils {
   // TEMP CODE - MUNISH THAKUR
   bool get isRelease => kReleaseMode;
 
-  //bool get isRelease => true;
-
-  User? get user => SharedPreferencesUtil.instance.user;
 
   Future<String> get buildNumber async {
     final packageInfo = await PackageInfo.fromPlatform();
@@ -97,7 +93,8 @@ class AppUtils {
       'isRelease': isRelease,
       'operatingSystem': Platform.operatingSystem,
       'operatingSystemVersion': Platform.operatingSystemVersion,
-      'userInfo': user?.toMapShare() ?? {},
+      'userId': SharedPreferencesUtil.instance.userId,
+      'userName': SharedPreferencesUtil.instance.userName,
     };
 
     return parameters;

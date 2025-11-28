@@ -1,13 +1,12 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../enums/app_enums.dart';
 import '../../../firebase/appInsights/event_logger.dart';
 import '../../../network/models/other/app_meta_data.dart';
-import '../../../network/models/response/user/response_user.dart';
-import '../../../network/models/response/user/user.dart';
 import '../../../theme/theme_utils.dart';
 
 class SharedPreferencesUtil {
@@ -87,39 +86,19 @@ extension SharedPreferencesUtilExtension on SharedPreferencesUtil {
 
   ThemeMode getAppTheme() => getString(keyTheme) != null ? ThemeUtils.getThemeFromString(getString(keyTheme)!) : ThemeMode.dark;
 
-  ResponseUserData? get sessionData {
-    try {
-      final json = getSharedPreferenceMap(keySession);
-      if (json == null) {
-        return null;
-      }
-      return ResponseUserData.fromJson(json);
-    } catch (e) {
-      // ErrorLogger.log(e, StackTrace.current);
-      EventLogger.instance.logError(exception: e, stackTrace: StackTrace.current);
-      return null;
-    }
+  User? get _sessionUser {
+    final _auth = FirebaseAuth.instance;
+    return _auth.currentUser;
   }
 
-  Future<bool> _setSession(ResponseUserData session) async => setString(keySession, json.encode(session));
 
-  Future<bool> setSession(ResponseUserData value) async {
-    final session = sessionData;
-    if (session != null) {
-      value.token ??= session.token;
-      value.refreshToken ??= session.refreshToken;
-    }
+  User? get user => _sessionUser;
 
-    return _setSession(value);
-  }
+  String get userId => user?.uid ?? '';
 
-  User? get user => sessionData?.resultSet;
+  String get userName => user?.displayName ?? '';
 
-  int get userId => user?.userId ?? 0;
-
-  String get userName => user?.userNameFormatted ?? '';
-
-  bool get isLogin => userId > 0;
+  bool get isLogin => userId.isNotEmpty;
 
   Future<void> logout() async {
     for (final key in alSpKeysToRemove) {

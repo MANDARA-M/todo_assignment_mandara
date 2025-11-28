@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:inSTA/Screens/home/todo_list_screen.dart';
 
 import '../../common_widgets/appbar_widget.dart';
 import '../../common_widgets/tabs/tabs_application.dart';
-import '../../enums/app_enums.dart';
 import '../../extensions/state_extensions.dart';
 import '../../l10n/app_localizations.dart';
-import '../feed/feed_list_main_screen.dart';
 import '../model/tab_meta_data.dart';
 
 class AppHomeScreen extends StatefulHookConsumerWidget {
@@ -38,41 +37,22 @@ class AppHomeScreenState extends ConsumerState<AppHomeScreen> with AutomaticKeep
   }
 
   void _populateTabs() {
-    final _keyHome = GlobalKey<FeedListScreenState>();
-    final _keyFriends = GlobalKey<FeedListScreenState>();
-    final _keyTrending = GlobalKey<FeedListScreenState>();
-    final _keyCommunity = GlobalKey<FeedListScreenState>();
+    final _keyTodoOwn = GlobalKey<TodoListScreenState>();
+    final _keyTodoJoined = GlobalKey<TodoListScreenState>();
 
-    final _homeScreen = FeedListScreen.create(
-      feedType: .feedAppHome,
-      //feedType: .feedAppCommunity,
-      isFollowButtonVisible: true,
-      isMoreButtonVisible: true,
-      key: _keyHome,
+    final _homeScreen = TodoListScreen(todoScreenType: .created, key: _keyTodoOwn);
+    final _friendsScreen = TodoListScreen(todoScreenType: .joined, key: _keyTodoJoined);
+
+    final _todoOwnTab = HomeTabsMetaData(
+      key: _keyTodoOwn,
+      child: TabMetaData(title: _localizations.tabForYou, child: _homeScreen),
     );
-    final _friendsScreen = FeedListScreen.create(
-      feedType: .feedAppFriends,
-      isFollowButtonVisible: true,
-      isMoreButtonVisible: true,
-      key: _keyFriends,
-    );
-    final _trendingScreen = FeedListScreen.create(
-      feedType: .feedAppTrending,
-      isFollowButtonVisible: true,
-      isMoreButtonVisible: true,
-      key: _keyTrending,
-    );
-    final _communityScreen = FeedListScreen.create(
-      feedType: FeedType.feedAppCommunity,
-      key: _keyCommunity,
+    final _todoJoinedTab = HomeTabsMetaData(
+      key: _keyTodoJoined,
+      child: TabMetaData(title: _localizations.tabFriends, child: _friendsScreen),
     );
 
-    final _homeScreenTab = HomeTabsMetaData(key: _keyHome, child: TabMetaData(title: _localizations.tabForYou, child: _homeScreen));
-    final _friendsScreenTab = HomeTabsMetaData(key: _keyFriends, child: TabMetaData(title: _localizations.tabFriends, child: _friendsScreen));
-    final _trendingScreenTab = HomeTabsMetaData(key: _keyTrending, child: TabMetaData(title: _localizations.tabTrending, child: _trendingScreen));
-    final _communityScreenTab = HomeTabsMetaData(key: _keyCommunity, child: TabMetaData(title: _localizations.tabCommunity, child: _communityScreen));
-
-    homeTabMetaData.addAll([_homeScreenTab, _friendsScreenTab, _trendingScreenTab, _communityScreenTab]);
+    homeTabMetaData.addAll([_todoOwnTab, _todoJoinedTab]);
 
     refresh;
   }
@@ -86,11 +66,7 @@ class AppHomeScreenState extends ConsumerState<AppHomeScreen> with AutomaticKeep
     }
 
     return Scaffold(
-      appBar: const AppBarWidget(
-        title: '',
-        isDashboard: true,
-        isSearchActionVisible: true,
-      ),
+      appBar: const AppBarWidget(title: '', isDashboard: true),
       body: TabsApplication(
         tabMetaData: tabMetaData,
         isTabScrollable: false,
@@ -109,6 +85,6 @@ class AppHomeScreenState extends ConsumerState<AppHomeScreen> with AutomaticKeep
 class HomeTabsMetaData {
   HomeTabsMetaData({required this.key, required this.child});
 
-  GlobalKey<FeedListScreenState> key;
+  GlobalKey<TodoListScreenState> key;
   TabMetaData child;
 }

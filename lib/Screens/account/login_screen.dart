@@ -5,9 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../common_widgets/appbar_widget.dart';
 import '../../common_widgets/button_widget.dart';
 import '../../constants/margin.dart';
+import '../../enums/app_enums.dart';
 import '../../extensions/state_extensions.dart';
 import '../../l10n/app_localizations.dart';
-import '../../navigation/navigation_utils.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
@@ -29,8 +29,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return _numberController.text.length == 10;
   }
 
-  late AuthProvider _auth;
+  late AuthProvider _authProvider;
   late ThemeProvider _theme;
+
+  late LoginState _loginState;
 
   @override
   void initState() {
@@ -47,8 +49,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _auth = ref.watch(authProvider);
+    _authProvider = ref.watch(authProvider);
     _theme = ref.watch(themeProvider);
+
+    _loginState = _authProvider.loginState;
 
     return Scaffold(
       appBar: const AppBarWidget(title: ''),
@@ -67,50 +71,29 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _screenTitle(),
-                Margin.vertical8,
-                _subTitle(),
-                Margin.vertical16,
-                _numberTextField(),
-              ],
+              children: [_screenTitle(), Margin.vertical8, _subTitle(), Margin.vertical16, _numberTextField()],
             ),
           ),
           Margin.vertical16,
-          Expanded(
-            flex: 0,
-            child: _bottomButton(),
-          ),
+          Expanded(flex: 0, child: _bottomButton()),
         ],
       ),
     );
   }
 
   Widget _screenTitle() {
-    return Text(
-      AppLocalizations.of(context)!.enteryourmobilenumber,
-      style: _theme.ts.extTs36.weightBold,
-    );
+    return Text(AppLocalizations.of(context)!.enteryourmobilenumber, style: _theme.ts.extTs36.weightBold);
   }
 
   Widget _subTitle() {
-    return Text(
-      AppLocalizations.of(context)!.wewillsendyouconfirmationcode,
-      style: _theme.ts.extTs16.colorMediumGrey.weightRegular,
-    );
+    return Text(AppLocalizations.of(context)!.wewillsendyouconfirmationcode, style: _theme.ts.extTs16.colorMediumGrey.weightRegular);
   }
 
   Widget _numberTextField() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          flex: 0,
-          child: Text(
-            AppLocalizations.of(context)!.countryCode,
-            style: _theme.ts.extTs36.colorMediumGrey.weightRegular,
-          ),
-        ),
+        Expanded(flex: 0, child: Text(AppLocalizations.of(context)!.countryCode, style: _theme.ts.extTs36.colorMediumGrey.weightRegular)),
         Margin.horizontal8,
         Expanded(
           child: TextField(
@@ -138,21 +121,36 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   List<FilteringTextInputFormatter> phoneNumberFormatter() {
     // add code to no space or special character allowed
-    return [
-      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-    ];
+    return [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))];
   }
 
   Widget _bottomButton() {
     //return AnimatedShrinkButton(
     return ButtonWidget(
       title: AppLocalizations.of(context)!.next,
-      onPressed: !isNumberValid ? null : () async {
-        final response = await _auth.login(_numberController.text);
-        if (response != null && mounted) {
-          NavigationUtils.instance.moveToOTPScreen(context, response);
-        }
-      },
+      onPressed: !isNumberValid
+          ? null
+          : _loginState == LoginState.loading
+          ? null
+          : _eventLogin,
     );
+  }
+
+  Future<void> _eventLogin() async {
+    await _authProvider.login(phone: _numberController.text);
+
+    switch (_loginState) {
+      case LoginState.initial:
+      case LoginState.loading:
+        break;
+      case LoginState.success:
+        break;
+      case LoginState.failure:
+        break;
+      case LoginState.codeSent:
+        break;
+      case LoginState.timeout:
+        break;
+    }
   }
 }
