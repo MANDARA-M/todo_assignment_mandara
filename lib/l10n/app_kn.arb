@@ -1,0 +1,11 @@
+{
+    "@@locale": "kn",
+    "next": "ಮುಂದುವರಿಸಿ",
+    "enteryourmobilenumber": "ನಿಮ್ಮ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+    "verify": "ಪರಿಶೀಲಿಸಿ",
+    "enterCodeSendToYourPhone": "ನಿಮ್ಮ ಫೋನ್‌ಗೆ ಕೊಡಲಾದ ಕೋಡ್‌ನ್ನು ನಮೂದಿಸಿ",
+    "weSentItToNumber": "ನಿಮಗೆ ಕೊಡಲಾದ ಕೋಡ್‌ನ್ನು ಈ ಸಂಖ್ಯೆಗೆ ಕಳುಹಿಸಿದ್ದೇವೆ",
+    "limitReachedForOtp": "OTP ಮರುಕಳುಹಿಸುವ ಮಿತಿ ಮೀರಿದೆ.",
+    "resendCodeIn": "ಕೋಡ್ ಮತ್ತೆ ಮರುಕಳುಹಿಸಲು ಸಮಯ: 00:",
+    "resendCode": "ಕೋಡ್ ಮರುಕಳುಹಿಸಿ"
+}

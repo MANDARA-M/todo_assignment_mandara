@@ -1,0 +1,16 @@
+{
+  "@@locale": "hi",
+  "welcome_message": "ऐप में आपका स्वागत है!",
+  "login_button": "लॉगिन",
+  "logout_button": "लॉगआउट",
+  "home_screen_title": "होम स्क्रीन",
+  "next": "आगे",
+  "enteryourmobilenumber": "अपना मोबाइल नंबर दर्ज करें",
+  "verify": "सत्यापित करें",
+  "enterCodeSendToYourPhone": "अपने फोन पर भेजे गए कोड को दर्ज करें",
+  "weSentItToNumber": "हमने इस नंबर पर भेज दिया है +91",
+  "limitReachedForOtp": "OTP पुनः भेजने की सीमा पहुंच गई है।",
+  "resendCodeIn": "कोड फिर से भेजने का समय: 00:",
+  "resendCode": "कोड पुनः भेजें",
+  "announcement": "घोषणा"
+}
