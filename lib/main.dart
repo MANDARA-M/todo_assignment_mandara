@@ -14,10 +14,23 @@ void main() async {
   );
   FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
+    cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED
   );
 
-  runApp(const HomePage());
+  runApp(const MyApp());
 
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const HomePage(),
+    );
+  }
 }
 
 

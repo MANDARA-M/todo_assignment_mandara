@@ -7,8 +7,8 @@ class Task {
   final String ownerId;
   final String title;
   final String description;
-  final Timestamp createdAt;
-  final Timestamp updatedAt;
+   Timestamp? createdAt;
+   Timestamp? updatedAt;
   bool isCompleted;
   final List<String> sharedWith;
 
@@ -18,8 +18,8 @@ class Task {
     required this.ownerId,
     required this.title,
     required this.description,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
     this.isCompleted = false,
     this.sharedWith = const [],
   });

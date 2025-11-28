@@ -24,4 +24,14 @@ class DataService {
      void addToDo(Task task) async {
        await toDoRef.add(task);
      }
+
+  void updateToDo(String toDoId, Task task) async {
+    await toDoRef.doc(toDoId).update(task.toJson());
+  }
+
+
+  void deleteToDo(String toDoId) async{
+       await toDoRef.doc(toDoId).delete();
+  }
+
 }
