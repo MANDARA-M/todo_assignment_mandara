@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:inSTA/navigation/navigation_utils.dart';
 
 import '../../common_widgets/bottom_sheet/bottom_sheet.dart';
 import '../../enums/app_enums.dart';
@@ -21,8 +22,7 @@ class BottomSheetTodoEventOptions extends StatefulHookConsumerWidget {
 
   static Future<void> show(BuildContext parentContext) async {
     return parentContext.showModalBottomSheetWidget<void>(
-      bottomSheetChildBuilder: (context, scrollController) =>
-          BottomSheetTodoEventOptions(scrollController: scrollController, parentContext: parentContext),
+      bottomSheetChildBuilder: (context, scrollController) => BottomSheetTodoEventOptions(scrollController: scrollController, parentContext: parentContext),
     );
   }
 
@@ -36,8 +36,15 @@ class _BottomSheetTodoEventOptionsState extends ConsumerState<BottomSheetTodoEve
   late AuthProvider auth = ref.watch(authProvider);
 
   late final options = <BottomOptions<TodoEventOptions>>[
-    BottomOptions(id: TodoEventOptions.GetSharedTodo, title: _localizations.editProfile, icon: FontAwesomeIcons.circlePlus, onTap: () {}),
-    BottomOptions(id: TodoEventOptions.AddTodo, title: _localizations.followersFollowings, icon: FontAwesomeIcons.solidNoteSticky, onTap: () {}),
+    BottomOptions(
+      id: TodoEventOptions.AddTodo,
+      title: _localizations.addNewTask,
+      icon: FontAwesomeIcons.circlePlus,
+      onTap: () {
+        NavigationUtils.instance.moveToCreateTaskScreen(context: context);
+      },
+    ),
+    BottomOptions(id: TodoEventOptions.GetSharedTodo, title: _localizations.joinTask, icon: FontAwesomeIcons.diagramSuccessor, onTap: () {}),
   ];
 
   @override

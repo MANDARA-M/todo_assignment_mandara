@@ -70,4 +70,6 @@ class NavigationUtils extends NavigationUtilsBase {
   void moveToHomeScreen({required BuildContext context}) => moveToRoute(context: context, route: AppRoute.dashboard, isRemoveAllOtherScreens: true);
 
   void moveToProfileScreen({required BuildContext context}) => moveToRoute(context: context, route: AppRoute.profile);
+
+  void moveToCreateTaskScreen({required BuildContext context, CreateTaskScreenRouteObject? routeObject}) => moveToRoute(context: context, route: AppRoute.createTask, extra: routeObject);
 }

@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:inSTA/Screens/todo/todo_card_widget.dart';
+import 'package:inSTA/navigation/navigation_utils.dart';
 
 import '../../enums/app_enums.dart';
-import '../../firebase/services/dataservice.dart';
+import '../../firebase/services/data_service.dart';
+import '../../navigation/router_configs.dart';
 import '../../network/models/todo/task.dart';
 
 class TodoListScreen extends StatefulWidget {
@@ -14,7 +18,38 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class TodoListScreenState extends State<TodoListScreen> {
-  final DataService _dataService = DataService.instance;
+  final _dataService = DataService.instance;
+
+  TodoScreenType get todoScreenType => widget.todoScreenType;
+
+  Stream<QuerySnapshot<Task>> getStream() {
+    Stream<QuerySnapshot<Task>> _stream;
+    switch (todoScreenType) {
+      case TodoScreenType.created:
+        _stream = _dataService.getOwnedToDos();
+        break;
+      case TodoScreenType.joined:
+        _stream = _dataService.getJoinedToDos();
+        break;
+    }
+
+    return _stream;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    /* WidgetsBinding.instance.addPostFrameCallback((_) {
+      switch (todoScreenType) {
+        case TodoScreenType.created:
+          _stream = _dataService.getOwnedToDos();
+          break;
+        case TodoScreenType.joined:
+          _stream = _dataService.getJoinedToDos();
+          break;
+      }
+    });*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,60 +61,44 @@ class TodoListScreenState extends State<TodoListScreen> {
   }
 
   Widget get _mainWidget {
-    return SizedBox(
-      height: MediaQuery.heightOf(context) * 0.70,
-      width: MediaQuery.widthOf(context),
-      child: StreamBuilder(
-        stream: _dataService.getToDos(),
-        builder: (context, snapshot) {
-          List todos = snapshot.data?.docs ?? [];
-          if (todos.isEmpty) {
-            return const Center(child: Text('No Todos Added Yet!'));
-          }
-          return Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: ListView.separated(
-              separatorBuilder: (context, index) => SizedBox(height: 8),
-              itemCount: todos.length,
-              itemBuilder: (context, index) {
-                final taskData = todos[index].data();
-                final task = taskData as Task;
-                final uid = task.uid;
-                return ListTile(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-                  tileColor: Theme.of(context).colorScheme.tertiary,
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Id: $uid', style: TextStyle(color: Colors.white)),
-                      Text(
-                        task.title,
-                        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Text(task.description, style: TextStyle(color: Colors.white)),
-                      //Text(DateFormat('yyyy-MM-dd – kk:mm').format(task.createdAt!.toDate()), style: TextStyle(color: Colors.white,)),
-                    ],
-                  ),
-                  leading: IconButton(
-                    color: Colors.white,
-                    onPressed: () {
-                      //showEditDialog(task, id);
-                    },
-                    icon: Icon(Icons.edit),
-                  ),
-                  trailing: Checkbox(
-                    shape: CircleBorder(),
-                    value: task.isCompleted,
-                    onChanged: (value) {
-                      /*Task updateTask = task.copyWith(isCompleted: !task.isCompleted, updatedAt: Timestamp.now());
-                              _dataService.updateToDo(id, updateTask);*/
-                    },
-                  ),
-                );
-              },
-            ),
+    return StreamBuilder<QuerySnapshot<Task>>(
+      stream: getStream(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: const CircularProgressIndicator());
+        }
+
+        final todos = snapshot.requireData.docs;
+        if (todos.isEmpty) {
+          return const Center(
+            child: Text('No Todos Added Yet!', style: TextStyle(color: Colors.white)),
           );
+        }
+
+        return _listOfTodos(todos);
+      },
+    );
+  }
+
+  Widget _listOfTodos(List<QueryDocumentSnapshot<Task>> todos) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: ListView.separated(
+        separatorBuilder: (context, index) => SizedBox(height: 8),
+        itemCount: todos.length,
+        itemBuilder: (context, index) {
+          final document = todos[index];
+          final docId = document.id;
+          final task = document.data();
+
+          return ToDoCardWidget(docId: docId, task: task, onTap: () {
+            final routeObject = CreateTaskScreenRouteObject(docId: docId, task: task);
+            NavigationUtils.instance.moveToCreateTaskScreen(context: context, routeObject: routeObject);
+          });
         },
       ),
     );

@@ -9,6 +9,21 @@ class AppLocalizationsHi extends AppLocalizations {
   AppLocalizationsHi([String locale = 'hi']) : super(locale);
 
   @override
+  String get created => 'Created';
+
+  @override
+  String get joined => 'Joined';
+
+  @override
+  String get addNewTask => 'Add New Task';
+
+  @override
+  String get joinTask => 'Join Task';
+
+  @override
+  String get addIconToTask => 'Add Icon to Task';
+
+  @override
   String get wewillsendyouconfirmationcode =>
       'We will send you confirmation code';
 
@@ -970,12 +985,6 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get pinned => 'Pinned';
-
-  @override
-  String get created => 'Created';
-
-  @override
-  String get joined => 'Joined';
 
   @override
   String get pending => 'Pending';

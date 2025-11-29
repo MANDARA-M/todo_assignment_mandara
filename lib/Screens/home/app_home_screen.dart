@@ -45,11 +45,11 @@ class AppHomeScreenState extends ConsumerState<AppHomeScreen> with AutomaticKeep
 
     final _todoOwnTab = HomeTabsMetaData(
       key: _keyTodoOwn,
-      child: TabMetaData(title: _localizations.tabForYou, child: _homeScreen),
+      child: TabMetaData(title: _localizations.created, child: _homeScreen),
     );
     final _todoJoinedTab = HomeTabsMetaData(
       key: _keyTodoJoined,
-      child: TabMetaData(title: _localizations.tabFriends, child: _friendsScreen),
+      child: TabMetaData(title: _localizations.joined, child: _friendsScreen),
     );
 
     homeTabMetaData.addAll([_todoOwnTab, _todoJoinedTab]);

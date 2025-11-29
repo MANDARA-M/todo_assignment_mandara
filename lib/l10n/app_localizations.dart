@@ -104,6 +104,36 @@ abstract class AppLocalizations {
     Locale('pt'),
   ];
 
+  /// No description provided for @created.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get created;
+
+  /// No description provided for @joined.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined'**
+  String get joined;
+
+  /// No description provided for @addNewTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Task'**
+  String get addNewTask;
+
+  /// No description provided for @joinTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Task'**
+  String get joinTask;
+
+  /// No description provided for @addIconToTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Icon to Task'**
+  String get addIconToTask;
+
   /// No description provided for @wewillsendyouconfirmationcode.
   ///
   /// In en, this message translates to:
@@ -1951,18 +1981,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pinned'**
   String get pinned;
-
-  /// No description provided for @created.
-  ///
-  /// In en, this message translates to:
-  /// **'Created'**
-  String get created;
-
-  /// No description provided for @joined.
-  ///
-  /// In en, this message translates to:
-  /// **'Joined'**
-  String get joined;
 
   /// No description provided for @pending.
   ///

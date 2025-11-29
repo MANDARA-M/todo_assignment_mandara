@@ -71,7 +71,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         label: 'Create',
         icon: CreateFloatingButton(size: 24, backgroundColor: AppColor.themeColorPrimaryCommon),
       ),
-      _bottomNavigationBarItem(label: 'Shorts', iconData: FontAwesomeIcons.cloudBolt, iconDataActive: FontAwesomeIcons.cloudBolt),
+      _bottomNavigationBarItem(label: 'Chart', iconData: FontAwesomeIcons.chartSimple, iconDataActive: FontAwesomeIcons.cloudBolt),
       BottomNavigationBarItem(label: 'Profile', icon: _profileWidget),
     ]);
 

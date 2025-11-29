@@ -50,12 +50,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with WidgetsBindingOb
     });
   }
 
+  bool _isAppStateObserverActive = false;
   void _addObserver() {
-    final provider = ref.read(authProvider);
-    provider.addListener(_onProviderChange);
+    _isAppStateObserverActive = true;
+    ref.read(authProvider).addListener(_onProviderChange);
   }
 
   void _removeObserver() {
+    _isAppStateObserverActive = false;
     ref.read(authProvider).removeListener(_onProviderChange);
   }
 
@@ -64,7 +66,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with WidgetsBindingOb
     PrintUtils.instance.printLog('Login Screen - AppLifecycleState: $state');
     if (state == AppLifecycleState.resumed) {
       _addObserver();
-    } else if (state == AppLifecycleState.inactive) {
+    } else {
       _removeObserver();
     }
   }
@@ -79,6 +81,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with WidgetsBindingOb
   }
 
   void _onProviderChange() {
+    if (!_isAppStateObserverActive) {
+      return;
+    }
     _loginState = _authProvider.loginState;
 
     switch (_loginState) {
