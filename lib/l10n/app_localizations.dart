@@ -100,6 +100,36 @@ abstract class AppLocalizations {
     Locale('kn'),
   ];
 
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
+
+  /// No description provided for @chart.
+  ///
+  /// In en, this message translates to:
+  /// **'Chart'**
+  String get chart;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
   /// No description provided for @created.
   ///
   /// In en, this message translates to:
@@ -273,12 +303,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Share tasks and achieve more, like never before'**
   String get onboardingSubTitle1Screen3;
-
-  /// No description provided for @profile.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile'**
-  String get profile;
 
   /// No description provided for @internetNotConnected.
   ///

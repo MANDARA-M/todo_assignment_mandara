@@ -28,7 +28,6 @@ class DashboardScreen extends StatefulHookConsumerWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-
   late final _localizations = AppLocalizations.of(context)!;
 
   AuthenticationProvider? _authProvider;
@@ -43,7 +42,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   static const int homeIndex = 0;
   int _currentIndex = homeIndex;
 
-  // Keep a history of visited tabs (no dupes in a row):
   final List<int> _tabHistory = <int>[];
 
   late final pageController = PageController(initialPage: _currentIndex);
@@ -69,14 +67,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   void _refreshTabs() {
     _bottomNavigationBarItems.clear();
     _bottomNavigationBarItems.addAll([
-      _bottomNavigationBarItem(label: 'Home', iconData: FluentIcons.home_12_regular, iconDataActive: FluentIcons.home_12_filled),
-      _bottomNavigationBarItem(label: 'Search', iconData: FluentIcons.search_12_regular, iconDataActive: FluentIcons.search_12_filled),
-      const BottomNavigationBarItem(
-        label: 'Create',
+      _bottomNavigationBarItem(label: _localizations.home, iconData: FluentIcons.home_12_regular, iconDataActive: FluentIcons.home_12_filled),
+      _bottomNavigationBarItem(label: _localizations.search, iconData: FluentIcons.search_12_regular, iconDataActive: FluentIcons.search_12_filled),
+      BottomNavigationBarItem(
+        label: _localizations.create,
         icon: CreateFloatingButton(size: 24, backgroundColor: AppColor.themeColorPrimaryCommon),
       ),
-      _bottomNavigationBarItem(label: 'Chart', iconData: FontAwesomeIcons.chartSimple, iconDataActive: FontAwesomeIcons.cloudBolt),
-      BottomNavigationBarItem(label: 'Profile', icon: _profileWidget),
+      _bottomNavigationBarItem(label: _localizations.chart, iconData: FontAwesomeIcons.chartSimple, iconDataActive: FontAwesomeIcons.chartSimple),
+      BottomNavigationBarItem(label: _localizations.profile, icon: _profileWidget),
     ]);
 
     _homeNavigationScreens.clear();

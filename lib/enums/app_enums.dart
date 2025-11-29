@@ -9,9 +9,9 @@ class AppEnums {}
 enum BottomSheetEventOptionsUI { poppins, listTile }
 
 enum Language {
+  Kannada(languageCode: 'kn', languageName: 'ಕನ್ನಡ'),
   English(languageCode: 'en', languageName: 'English'),
-  Hindi(languageCode: 'hi', languageName: 'Hindi'),
-  Kannada(languageCode: 'kn', languageName: 'Kannada');
+  Hindi(languageCode: 'hi', languageName: 'हिन्दी');
 
   const Language({required this.languageCode, required this.languageName});
 

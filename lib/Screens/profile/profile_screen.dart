@@ -13,6 +13,9 @@ import '../../common_widgets/appbar_widget.dart';
 import '../../l10n/app_localizations.dart';
 import '../../providers/utils/provider_utility.dart';
 
+import '../../enums/app_enums.dart';
+import '../../providers/language_provider.dart';
+
 class ProfileScreen extends StatefulHookConsumerWidget {
   const ProfileScreen({super.key});
 
@@ -54,11 +57,46 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with SingleTicker
           Text(userName, style: theme.ts.extTs24),
           Margin.vertical16,
           Text(user?.phoneNumber ?? '', style: theme.ts.extTs36),
+          Margin.vertical16,
+          _changeLanguage,
           Margin.vertical32,
           _logoutButton,
         ],
       ),
     );
+  }
+
+  Widget get _changeLanguage {
+    return Row(
+      children: [
+        Text('Change Language', style: theme.ts.extTs16,),
+        Spacer(),
+        ..._languageWidget,
+      ],
+    );
+  }
+
+  List<Widget> get _languageWidget {
+    final allLanguages = Language.values;
+
+    final widgets = <Widget>[];
+    for(final language in allLanguages) {
+      final child =  InkWell(
+        onTap: () {
+          ref.read(languageProvider.notifier).update((_) => language);
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: theme.boxDecorationInfoWidget,
+          child: Text(language.languageName, style: theme.ts.extTs12,),
+        ),
+      );
+
+      widgets.add(child);
+      widgets.add(Margin.horizontal8);
+    }
+
+    return widgets;
   }
 
   Widget get _logoutButton {

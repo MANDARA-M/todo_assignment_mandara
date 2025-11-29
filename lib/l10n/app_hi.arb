@@ -1,5 +1,9 @@
 {
   "@@locale": "hi",
+  "home": "होम",
+  "search": "खोजें",
+  "create": "बनाएँ",
+  "chart": "चार्ट",
   "created": "बनाया गया",
   "joined": "जुड़ा",
   "createNewTask": "नया कार्य जोड़ें",

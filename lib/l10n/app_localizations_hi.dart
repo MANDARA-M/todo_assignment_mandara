@@ -9,6 +9,21 @@ class AppLocalizationsHi extends AppLocalizations {
   AppLocalizationsHi([String locale = 'hi']) : super(locale);
 
   @override
+  String get home => 'होम';
+
+  @override
+  String get search => 'खोजें';
+
+  @override
+  String get create => 'बनाएँ';
+
+  @override
+  String get chart => 'चार्ट';
+
+  @override
+  String get profile => 'प्रोफ़ाइल';
+
+  @override
   String get created => 'बनाया गया';
 
   @override
@@ -101,9 +116,6 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get onboardingSubTitle1Screen3 =>
       'कार्य साझा करें और पहले से अधिक हासिल करें';
-
-  @override
-  String get profile => 'प्रोफ़ाइल';
 
   @override
   String get internetNotConnected =>

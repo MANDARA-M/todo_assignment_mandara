@@ -9,6 +9,21 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get home => 'Home';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get create => 'Create';
+
+  @override
+  String get chart => 'Chart';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
   String get created => 'Created';
 
   @override
@@ -101,9 +116,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingSubTitle1Screen3 =>
       'Share tasks and achieve more, like never before';
-
-  @override
-  String get profile => 'Profile';
 
   @override
   String get internetNotConnected =>

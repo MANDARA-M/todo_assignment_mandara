@@ -14,11 +14,12 @@ import '../../providers/utils/provider_utility.dart';
 import '../../theme/theme_utils.dart';
 
 class ToDoCardWidget extends ConsumerStatefulWidget {
-  const ToDoCardWidget({required this.docId, required this.task, this.onTap, super.key});
+  const ToDoCardWidget({required this.docId, required this.task, this.onTap, this.isActive = true, super.key});
 
   final String docId;
   final Task task;
   final VoidCallback? onTap;
+  final bool isActive;
 
   @override
   ConsumerState<ToDoCardWidget> createState() => _ToDoCardWidgetState();
@@ -65,7 +66,7 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
   Widget build(BuildContext context) {
     theme = ref.watch(themeProvider);
 
-    return ScaleTransition(
+    Widget child = ScaleTransition(
       scale: Tween<double>(begin: 1.0, end: 0.98).animate(CurvedAnimation(parent: _scaleController, curve: Curves.easeInOut)),
       child: Material(
         color: Colors.transparent,
@@ -104,7 +105,7 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
                               Container(
                                 padding: const EdgeInsets.all(6),
                                 decoration: BoxDecoration(
-                                  color: theme.getBottomSheetActionColor(true)?.withValues(alpha: 0.1),
+                                  color: theme.getBottomSheetActionColor(true).withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: task.emoji != null
@@ -136,7 +137,7 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(color: theme.getBottomSheetActionColor(true)?.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                      decoration: BoxDecoration(color: theme.getBottomSheetActionColor(true).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -157,13 +158,13 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              theme.getBottomSheetActionColor(true).withValues(alpha: 0.15) ?? Colors.blue.withValues(alpha: 0.15),
-                              theme.getBottomSheetActionColor(true).withValues(alpha: 0.08) ?? Colors.blue.withValues(alpha: 0.08),
+                              theme.getBottomSheetActionColor(true).withValues(alpha: 0.15),
+                              theme.getBottomSheetActionColor(true).withValues(alpha: 0.08),
                             ],
                           ),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: theme.getBottomSheetActionColor(true).withValues(alpha: 0.3) ?? Colors.blue.withValues(alpha: 0.3),
+                            color: theme.getBottomSheetActionColor(true).withValues(alpha: 0.3),
                             width: 1,
                           ),
                         ),
@@ -187,6 +188,12 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
         ),
       ),
     );
+
+    if (!widget.isActive) {
+      child = IgnorePointer(child: child);
+    }
+
+    return child;
   }
 
   Widget get _shareWidget {

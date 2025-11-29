@@ -1,5 +1,10 @@
 {
   "@@locale": "en",
+  "home": "Home",
+  "search": "Search",
+  "create": "Create",
+  "chart": "Chart",
+  "profile": "Profile",
   "created": "Created",
   "joined": "Joined",
   "createNewTask": "create New Task",
@@ -29,7 +34,6 @@
   "onboardingTitle1Screen3": "Share",
   "onboardingTitle2Screen3": "Tasks",
   "onboardingSubTitle1Screen3": "Share tasks and achieve more, like never before",
-  "profile": "Profile",
   "internetNotConnected": "You don’t have an internet connection, or your signal is too low.",
   "wewillsendyouconfirmationcode": "We will send you confirmation code",
   "enteryourmobilenumber": "Enter your \nmobile number",

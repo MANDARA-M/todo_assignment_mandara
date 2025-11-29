@@ -9,6 +9,21 @@ class AppLocalizationsKn extends AppLocalizations {
   AppLocalizationsKn([String locale = 'kn']) : super(locale);
 
   @override
+  String get home => 'ಮುಖಪುಟ';
+
+  @override
+  String get search => 'ಹುಡುಕಿ';
+
+  @override
+  String get create => 'ರಚಿಸಿ';
+
+  @override
+  String get chart => 'ಚಾರ್ಟ್';
+
+  @override
+  String get profile => 'ಪ್ರೊಫೈಲ್';
+
+  @override
   String get created => 'ಸೃಷ್ಟಿಸಲಾಗಿದೆ';
 
   @override
@@ -102,9 +117,6 @@ class AppLocalizationsKn extends AppLocalizations {
   @override
   String get onboardingSubTitle1Screen3 =>
       'ಕಾರ್ಯಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಿ ಮತ್ತು ಮೊದಲಿಗಿಂತ ಹೆಚ್ಚಾಗಿ ಸಾಧಿಸಿ';
-
-  @override
-  String get profile => 'ಪ್ರೊಫೈಲ್';
 
   @override
   String get internetNotConnected =>

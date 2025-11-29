@@ -60,7 +60,7 @@ class _BottomSheetTaskAddState extends ConsumerState<BottomSheetTaskAdd> {
           CustomWidget.instance.getLinksBottomSheetTopUI(theme: theme, title: _localizations.addTaskTitle, description: _localizations.addTaskDescription),
           Margin.vertical24,
           if (!isAddAvailable) TitleTextField(title: 'Task Id', prefixIcon: Icons.task_alt, controller: taskIdController),
-          if (task != null) ...[Margin.vertical24, ToDoCardWidget(docId: docId, task: task!)],
+          if (task != null) ...[Margin.vertical24, ToDoCardWidget(docId: docId, task: task!, isActive: false,)],
           Margin.vertical32,
           if (!isAddAvailable) _buttonFetch,
           if (isAddAvailable) _buttonJoin,
@@ -80,7 +80,7 @@ class _BottomSheetTaskAddState extends ConsumerState<BottomSheetTaskAdd> {
         if (task == null) {
           _showToast(_localizations.toastErrorNoTaskFound);
         } else if (task.isOwner) {
-          _showToast(_localizations.toastErrorNoTaskFound);
+          _showToast(_localizations.toastErrorTaskOwner);
         } else if (task.isJoined) {
           _showToast(_localizations.toastErrorTaskAlreadyJoined);
         } else {
