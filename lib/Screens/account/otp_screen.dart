@@ -153,6 +153,8 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
             ),
           ),
           Margin.vertical16,
+          dummyNumbers,
+          Margin.vertical16,
           Expanded(flex: 0, child: _bottomButton()),
         ],
       ),
@@ -168,6 +170,10 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
       '${AppLocalizations.of(context)!.weSentItToNumber} $phoneNumber',
       style: _theme.ts.extTs16.colorMediumGrey.weightMedium,
     );
+  }
+
+  Widget get dummyNumbers {
+    return Text('Dummy OTP: 123456', style: _theme.ts.extTs16.colorMediumGrey.weightRegular);
   }
 
   Widget get timerWidget {

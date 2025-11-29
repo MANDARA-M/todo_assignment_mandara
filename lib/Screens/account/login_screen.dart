@@ -133,6 +133,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with WidgetsBindingOb
             ),
           ),
           Margin.vertical16,
+          dummyNumbers,
+          Margin.vertical16,
           Expanded(flex: 0, child: _bottomButton()),
         ],
       ),
@@ -145,6 +147,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with WidgetsBindingOb
 
   Widget _subTitle() {
     return Text(AppLocalizations.of(context)!.wewillsendyouconfirmationcode, style: _theme.ts.extTs16.colorMediumGrey.weightRegular);
+  }
+
+  Widget get dummyNumbers {
+    return Text('You can user original or Dummy numbers \n\n1000000001, 1000000002, 1000000003, 1000000004, 1000000005, 1000000006, 1000000007, 1000000008, 1000000009\n\nOTP: 123456', style: _theme.ts.extTs16.colorMediumGrey.weightRegular);
   }
 
   Widget _numberTextField() {
