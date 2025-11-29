@@ -4,7 +4,7 @@ import '../common_widgets/issue_screen.dart';
 import '../enums/app_enums.dart';
 import '../gen/assets.gen.dart';
 import '../l10n/app_localizations.dart';
-import '../providers/auth_provider.dart';
+import '../providers/authentication_provider.dart';
 import '../utilities/extension_utils.dart';
 import '../utilities/print_util.dart';
 import '../utilities/storage/shared_preference/shared_preferences_util.dart';
@@ -31,7 +31,7 @@ class NavigationUtils extends NavigationUtilsBase {
   /// Router Navigation Methods - Start
   ///
 
-  Future<void> checkAppStateAndProceedFurther(State state, {required AuthProvider auth}) async {
+  Future<void> checkAppStateAndProceedFurther(State state, {required AuthenticationProvider auth}) async {
     final isOnBoardingCompleted = SharedPreferencesUtil.instance.isOnBoardingCompleted;
 
     if (state.mounted) {
@@ -71,5 +71,6 @@ class NavigationUtils extends NavigationUtilsBase {
 
   void moveToProfileScreen({required BuildContext context}) => moveToRoute(context: context, route: AppRoute.profile);
 
-  void moveToCreateTaskScreen({required BuildContext context, CreateTaskScreenRouteObject? routeObject}) => moveToRoute(context: context, route: AppRoute.createTask, extra: routeObject);
+  void moveToCreateTaskScreen({required BuildContext context, CreateTaskScreenRouteObject? routeObject}) =>
+      moveToRoute(context: context, route: AppRoute.createTask, extra: routeObject);
 }

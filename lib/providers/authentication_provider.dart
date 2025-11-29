@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:restart/restart.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ import '../utilities/storage/shared_preference/shared_preferences_util.dart';
 typedef LoginSuccess = void Function(User? user);
 typedef NotLoggedIn = void Function();
 
-class AuthProvider extends ChangeNotifier {
+class AuthenticationProvider extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
 
   LoginState _loginState = LoginState.initial;
@@ -148,5 +149,6 @@ class AuthProvider extends ChangeNotifier {
     await FirebaseAuth.instance.signOut();
     await SharedPreferencesUtil.instance.logout();
     await _logoutSession();
+    await restart();
   }
 }

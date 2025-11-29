@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../constants/app_color.dart';
 import '../../gen/assets.gen.dart';
 import '../../navigation/navigation_utils.dart';
-import '../../providers/auth_provider.dart';
+import '../../providers/authentication_provider.dart';
 import '../../providers/utils/provider_utility.dart';
 
 class SplashScreen extends StatefulHookConsumerWidget {
@@ -18,7 +18,7 @@ class SplashScreen extends StatefulHookConsumerWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-  late AuthProvider _auth;
+  late AuthenticationProvider _authenticationProvider;
 
   int get animationTimeInSeconds => kDebugMode ? 3 : 3;
 
@@ -31,13 +31,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void _initialize() {
     Timer.periodic(Duration(seconds: animationTimeInSeconds), (timer) {
       timer.cancel();
-      NavigationUtils.instance.checkAppStateAndProceedFurther(this, auth: _auth);
+      NavigationUtils.instance.checkAppStateAndProceedFurther(this, auth: _authenticationProvider);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    _auth = ref.watch(authProvider);
+    _authenticationProvider = ref.watch(authenticationProvider);
 
     return _mainWidget;
   }

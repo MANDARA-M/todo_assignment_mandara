@@ -100,7 +100,9 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
                                   color: theme.getBottomSheetActionColor(true)?.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Icon(FluentIcons.lightbulb_24_filled, size: 16, color: theme.getBottomSheetActionColor(true)),
+                                child: task.emoji != null
+                                    ? Text(task.emoji!, style: theme.ts.extTs16.weightBold)
+                                    : Icon(FluentIcons.lightbulb_24_filled, size: 16, color: theme.getBottomSheetActionColor(true)),
                               ),
                               const SizedBox(width: 8),
                               Expanded(

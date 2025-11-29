@@ -50,7 +50,7 @@ dependencies:
   # Mobile Only (Android & iOS)
   # ============================================
 
-
+  restart: ^1.0.0
   firebase_crashlytics: ^5.0.4
   firebase_auth: ^6.1.2
 

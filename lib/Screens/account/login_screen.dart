@@ -9,7 +9,7 @@ import '../../constants/margin.dart';
 import '../../enums/app_enums.dart';
 import '../../extensions/state_extensions.dart';
 import '../../l10n/app_localizations.dart';
-import '../../providers/auth_provider.dart';
+import '../../providers/authentication_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
 import '../../theme/theme_utils.dart';
@@ -31,7 +31,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with WidgetsBindingOb
     return _numberController.text.length == 10;
   }
 
-  late AuthProvider _authProvider;
+  late AuthenticationProvider _authProvider;
   late ThemeProvider _theme;
 
   late LoginState _loginState;
@@ -53,12 +53,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with WidgetsBindingOb
   bool _isAppStateObserverActive = false;
   void _addObserver() {
     _isAppStateObserverActive = true;
-    ref.read(authProvider).addListener(_onProviderChange);
+    ref.read(authenticationProvider).addListener(_onProviderChange);
   }
 
   void _removeObserver() {
     _isAppStateObserverActive = false;
-    ref.read(authProvider).removeListener(_onProviderChange);
+    ref.read(authenticationProvider).removeListener(_onProviderChange);
   }
 
   @override
@@ -105,7 +105,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    _authProvider = ref.watch(authProvider);
+    _authProvider = ref.watch(authenticationProvider);
     _theme = ref.watch(themeProvider);
 
     _loginState = _authProvider.loginState;

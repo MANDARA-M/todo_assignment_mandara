@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../gen/assets.gen.dart';
-import '../providers/auth_provider.dart';
 import '../providers/theme_provider.dart';
 import '../providers/utils/provider_utility.dart';
 import '../theme/theme_utils.dart';
@@ -44,16 +42,15 @@ class AppBarWidget extends HookConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authProvider);
     final theme = ref.watch(themeProvider);
 
     return AppBar(
       toolbarHeight: height,
       key: key,
       titleSpacing: 2,
-      title:overrideTitle ?? Text(title != null ?'\t\t$title' : '', style: theme.ts.extTs24.height24.copyWith(color: titleColor)),
+      title: overrideTitle ?? Text(title != null ? '\t\t$title' : '', style: theme.ts.extTs24.height24.copyWith(color: titleColor)),
       elevation: elevation,
-      actions: _actions(context: context, auth: auth, theme: theme),
+      actions: _actions(context: context, theme: theme),
       centerTitle: centerTitle,
       bottom: bottom,
       backgroundColor: backgroundColor,
@@ -62,31 +59,23 @@ class AppBarWidget extends HookConsumerWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget get _appIconWidget => Container(
-    padding: const EdgeInsets.all(8),
-    child: Assets.appicon.appIcon.image(
-      width: 110,
-      fit: BoxFit.fill,
-    ),
-  );
-
-  List<Widget> _actions({required BuildContext context, required AuthProvider auth, required ThemeProvider theme}) {
+  List<Widget> _actions({required BuildContext context, required ThemeProvider theme}) {
     final listOfActionIcons = icons
         .map(
           (icon) => Padding(
-        padding: EdgeInsets.only(right: icon == icons.last ? 8 : 0),
-        child: icon,
-      ),
-    )
+            padding: EdgeInsets.only(right: icon == icons.last ? 8 : 0),
+            child: icon,
+          ),
+        )
         .toList();
 
     final listOfActionWidgets = actionWidgets
         .map(
           (icon) => Padding(
-        padding: EdgeInsets.only(right: icon == actionWidgets.last ? 16 : 0),
-        child: icon,
-      ),
-    )
+            padding: EdgeInsets.only(right: icon == actionWidgets.last ? 16 : 0),
+            child: icon,
+          ),
+        )
         .toList();
 
     final newIcons = <Widget>[];
@@ -99,19 +88,11 @@ class AppBarWidget extends HookConsumerWidget implements PreferredSizeWidget {
 }
 
 class AppbarIcon extends IconButton {
-  AppbarIcon({
-    required IconData? iconData,
-    VoidCallback? onPressed,
-    Color? iconColor,
-    Key? key,
-  }) : super(
-    icon: Icon(
-      iconData,
-      size: 18.0,
-      color: iconColor,
-    ),
-    onPressed: onPressed,
-    splashRadius: 20.0,
-    key: key,
-  );
+  AppbarIcon({required IconData? iconData, VoidCallback? onPressed, Color? iconColor, Key? key})
+    : super(
+        icon: Icon(iconData, size: 18.0, color: iconColor),
+        onPressed: onPressed,
+        splashRadius: 20.0,
+        key: key,
+      );
 }

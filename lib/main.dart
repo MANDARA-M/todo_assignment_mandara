@@ -51,7 +51,7 @@ class InitializerWidget extends StatefulHookConsumerWidget {
 
 class _InitializerWidgetState extends ConsumerState<InitializerWidget> {
   late final theme = ref.watch(themeProvider);
-  late final auth = ref.watch(authProvider);
+  late final auth = ref.watch(authenticationProvider);
 
   late final Future<void> init = _appInitialize();
 

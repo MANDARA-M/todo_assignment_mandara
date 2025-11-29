@@ -11,7 +11,7 @@ import '../../constants/margin.dart';
 import '../../enums/app_enums.dart';
 import '../../extensions/state_extensions.dart';
 import '../../l10n/app_localizations.dart';
-import '../../providers/auth_provider.dart';
+import '../../providers/authentication_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
 import '../../theme/theme_utils.dart';
@@ -34,7 +34,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
 
   StreamController<ErrorAnimationType>? errorController;
 
-  late AuthProvider _authProvider;
+  late AuthenticationProvider _authProvider;
   late ThemeProvider _theme;
 
   late OtpVerificationState _otpVerificationState;
@@ -67,7 +67,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNode.requestFocus();
-      final provider = ref.read(authProvider);
+      final provider = ref.read(authenticationProvider);
       provider.addListener(_onProviderChange);
     });
   }
@@ -76,7 +76,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
   void dispose() {
     super.dispose();
 
-    ref.read(authProvider).removeListener(_onProviderChange);
+    ref.read(authenticationProvider).removeListener(_onProviderChange);
     if (_timer?.isActive ?? false) {
       _timer?.cancel();
     }
@@ -115,7 +115,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _authProvider = ref.watch(authProvider);
+    _authProvider = ref.watch(authenticationProvider);
     _theme = ref.watch(themeProvider);
 
     _otpVerificationState = _authProvider.otpVerificationState;

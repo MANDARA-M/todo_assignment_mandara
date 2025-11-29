@@ -8,7 +8,6 @@ import 'package:inSTA/navigation/navigation_utils.dart';
 import '../../common_widgets/bottom_sheet/bottom_sheet.dart';
 import '../../enums/app_enums.dart';
 import '../../l10n/app_localizations.dart';
-import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
 import 'bottom_sheet_model/bottom_options.dart';
@@ -33,7 +32,6 @@ class BottomSheetTodoEventOptions extends StatefulHookConsumerWidget {
 class _BottomSheetTodoEventOptionsState extends ConsumerState<BottomSheetTodoEventOptions> {
   late final _localizations = AppLocalizations.of(context)!;
   late ThemeProvider theme = ref.watch(themeProvider);
-  late AuthProvider auth = ref.watch(authProvider);
 
   late final options = <BottomOptions<TodoEventOptions>>[
     BottomOptions(

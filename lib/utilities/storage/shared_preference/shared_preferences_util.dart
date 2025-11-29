@@ -94,7 +94,7 @@ extension SharedPreferencesUtilExtension on SharedPreferencesUtil {
 
   User? get user => _sessionUser;
 
-  String get userId => user?.uid ?? '';
+  String get userId => user?.uid ?? '~';
 
   String get userName => user?.displayName ?? '';
 

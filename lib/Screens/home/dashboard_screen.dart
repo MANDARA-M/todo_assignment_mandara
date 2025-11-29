@@ -9,7 +9,7 @@ import '../../constants/app_color.dart';
 import '../../extensions/state_extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../navigation/navigation_utils.dart';
-import '../../providers/auth_provider.dart';
+import '../../providers/authentication_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
 import '../../theme/theme_utils.dart';
@@ -27,7 +27,7 @@ class DashboardScreen extends StatefulHookConsumerWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-  AuthProvider? _auth;
+  AuthenticationProvider? _authProvider;
   ThemeProvider? _theme;
 
   final ScrollController _scrollController = ScrollController();
@@ -88,7 +88,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _auth = ref.watch(authProvider);
+    _authProvider = ref.watch(authenticationProvider);
     _theme = ref.watch(themeProvider);
 
     initData();
@@ -201,33 +201,20 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       if (index == 0) {
         _keyHome.currentState?.scrollToTop();
       }
-      // Tapping the current tab should pop to its root:
+
       _navigatorKeys[index].currentState!.popUntil((r) => r.isFirst);
       return;
     }
-    // Track history (avoid consecutive duplicates)
+
     _tabHistory.remove(index);
     _tabHistory.add(_currentIndex);
 
     _currentIndex = index;
     refresh;
-
-    /*if (index != pageController.page) {
-      pageController.jumpToPage(index);
-      setState(() {
-        _currentIndex = index;
-        //screenTitle = items[newPage].label ?? '';
-      });
-    } else {
-      if (index == 0) {
-        _keyHome.currentState?.scrollToTop();
-      }
-      navigatorKeys[index].currentState?.popUntil((route) => route.isFirst);
-    }*/
   }
 
   void _showBottomSheetDashboard() {
-    _auth?.observerLogin(
+    _authProvider?.observerLogin(
       context,
       loginSuccess: (session) {
         BottomSheetTodoEventOptions.show(context);
@@ -236,10 +223,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   }
 
   void _showUserProfile() {
-    _auth?.observerLogin(
+    _authProvider?.observerLogin(
       context,
       loginSuccess: (session) {
-        if (_auth?.user != null) {
+        if (_authProvider?.user != null) {
           NavigationUtils.instance.moveToProfileScreen(context: context);
         }
       },
