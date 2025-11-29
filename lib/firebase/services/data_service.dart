@@ -26,25 +26,29 @@ class DataService {
         .withConverter<Task>(fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!), toFirestore: (task, _) => task.toJson());
   }
 
-  Stream<QuerySnapshot<Task>> getOwnedToDos() {
+  Stream<QuerySnapshot<Task>> getOwnedTask() {
     final ownerTasksQuery = todoCreatedRef.where('ownerId', isEqualTo: userId);
     return ownerTasksQuery.snapshots();
   }
 
-  Stream<QuerySnapshot<Task>> getJoinedToDos() {
+  Stream<QuerySnapshot<Task>> getJoinedTask() {
     final ownerTasksQuery = todoCreatedRef.where('sharedWith', arrayContains: userId);
     return ownerTasksQuery.snapshots();
   }
 
-  void addToDo(Task task) async {
+  void addTask(Task task) async {
     await todoCreatedRef.add(task);
   }
 
-  void updateToDo({required String docId, required Task task}) async {
+  void updateTask({required String docId, required Task task}) async {
     await todoCreatedRef.doc(docId).update(task.toJson());
   }
 
-  void deleteToDo(String toDoId) async {
+  void deleteTask(String toDoId) async {
     await todoCreatedRef.doc(toDoId).delete();
+  }
+  Future<Task?> getTaskById(String docId) async {
+    final docSnap = await todoCreatedRef.doc(docId).get();
+    return docSnap.exists ? docSnap.data() : null;
   }
 }

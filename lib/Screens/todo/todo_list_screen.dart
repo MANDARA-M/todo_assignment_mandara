@@ -26,10 +26,10 @@ class TodoListScreenState extends State<TodoListScreen> {
     Stream<QuerySnapshot<Task>> _stream;
     switch (todoScreenType) {
       case TodoScreenType.created:
-        _stream = _dataService.getOwnedToDos();
+        _stream = _dataService.getOwnedTask();
         break;
       case TodoScreenType.joined:
-        _stream = _dataService.getJoinedToDos();
+        _stream = _dataService.getJoinedTask();
         break;
     }
 

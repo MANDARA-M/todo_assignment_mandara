@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:inSTA/navigation/navigation_utils.dart';
 import 'package:inSTA/utilities/app_utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -93,6 +94,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
         break;
       case OtpVerificationState.success:
         AppUtils.instance.configApp(context: context);
+        NavigationUtils.instance.checkAppStateAndProceedFurther(this, auth: _authProvider);
         break;
       case OtpVerificationState.failure:
         ToastUtils.instance.showToastRelease(message: 'Invalid OTP');

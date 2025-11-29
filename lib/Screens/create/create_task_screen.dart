@@ -371,10 +371,10 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
 
     if (isEditFlow) {
       task!.update(title: title, description: description, category: _selectedCategory, emoji: _selectedEmoji);
-      _dataService.updateToDo(docId: docId!, task: task!);
+      _dataService.updateTask(docId: docId!, task: task!);
     } else {
       final task = Task.newTask(title: title, description: description, category: _selectedCategory, emoji: _selectedEmoji);
-      _dataService.addToDo(task);
+      _dataService.addTask(task);
     }
 
     Timer.periodic(const Duration(seconds: 1), (_timer) {

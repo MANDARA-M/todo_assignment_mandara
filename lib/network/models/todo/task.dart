@@ -48,6 +48,12 @@ class Task {
 
   TaskStatus get taskStatus => TaskStatus.fromBool(isCompleted);
 
+  String get userId => SharedPreferencesUtil.instance.userId;
+
+  bool get isOwner => ownerId == userId;
+
+  bool get isJoined => sharedWith.contains(userId);
+
   Task update({required String title, required String description, required String? category, required String? emoji}) {
     this.title = title;
     this.description = description;

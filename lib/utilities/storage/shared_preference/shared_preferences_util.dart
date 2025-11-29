@@ -98,7 +98,7 @@ extension SharedPreferencesUtilExtension on SharedPreferencesUtil {
 
   String get userName => user?.displayName ?? '';
 
-  bool get isLogin => userId.isNotEmpty;
+  bool get isLogin => userId.length > 5;
 
   Future<void> logout() async {
     for (final key in alSpKeysToRemove) {

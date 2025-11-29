@@ -1,9 +1,13 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:inSTA/constants/margin.dart';
+import 'package:inSTA/utilities/share_utils.dart';
 
 import '../../extensions/state_extensions.dart';
 import '../../firebase/services/data_service.dart';
+import '../../l10n/app_localizations.dart';
 import '../../network/models/todo/task.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
@@ -21,6 +25,9 @@ class ToDoCardWidget extends ConsumerStatefulWidget {
 }
 
 class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTickerProviderStateMixin {
+
+  late final _localizations = AppLocalizations.of(context)!;
+
   late ThemeProvider theme;
 
   final _dataService = DataService.instance;
@@ -75,7 +82,7 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: theme.themeData?.cardTheme.color,
               borderRadius: BorderRadius.circular(16),
@@ -113,19 +120,18 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
                         ],
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    Margin.horizontal12,
                     _buildStatusBadge,
                   ],
                 ),
-
-                const SizedBox(height: 12),
+                Margin.vertical16,
                 Text(
                   task.description,
                   style: theme.ts.extTs14.copyWith(color: theme.textColor.withValues(alpha: 0.7), height: 1.5),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 16),
+                Margin.vertical16,
                 Row(
                   children: [
                     Container(
@@ -143,6 +149,7 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
                         ],
                       ),
                     ),
+                    _shareWidget,
                     const Spacer(),
                     if (task.category != null)
                       Container(
@@ -182,6 +189,12 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
     );
   }
 
+  Widget get _shareWidget {
+    return IconButton(onPressed: () {
+      ShareUtils.instance.shareTodo(localization: _localizations, code: docId);
+    }, icon: Icon(FontAwesomeIcons.share, color: theme.iconColor.withValues(alpha: 0.5),), iconSize: 16,);
+  }
+
   Widget get _buildStatusBadge {
     final taskStatus = task.taskStatus;
     final color = taskStatus.color;
@@ -189,7 +202,7 @@ class _ToDoCardWidgetState extends ConsumerState<ToDoCardWidget> with SingleTick
     return InkWell(
       onTap: () {
         task.toggleCompleted();
-        _dataService.updateToDo(docId: docId, task: task);
+        _dataService.updateTask(docId: docId, task: task);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),

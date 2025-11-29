@@ -52,6 +52,7 @@ class Margin {
   static const SizedBox horizontal8 = SizedBox(width: 8);
   static const SizedBox horizontal10 = SizedBox(width: 10);
   static const SizedBox horizontal11 = SizedBox(width: 11);
+  static const SizedBox horizontal12 = SizedBox(width: 12);
   static const SizedBox horizontal14 = SizedBox(width: 14);
   static const SizedBox horizontal16 = SizedBox(width: 16);
   static const SizedBox horizontal21 = SizedBox(width: 21);

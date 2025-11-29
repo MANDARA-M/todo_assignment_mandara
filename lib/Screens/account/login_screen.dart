@@ -91,11 +91,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with WidgetsBindingOb
       case LoginState.loading:
         break;
       case LoginState.success:
+        PrintUtils.instance.printWarning('MANDARA -> Login Success....');
         NavigationUtils.instance.checkAppStateAndProceedFurther(this, auth: _authProvider);
         break;
       case LoginState.failure:
         break;
       case LoginState.codeSent:
+        PrintUtils.instance.printWarning('MANDARA -> Code Sent....');
         NavigationUtils.instance.moveToOTPScreen(context, phoneNumber: phoneNumber);
         break;
       case LoginState.timeout:

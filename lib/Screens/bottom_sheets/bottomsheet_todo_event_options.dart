@@ -12,6 +12,7 @@ import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
 import 'bottom_sheet_model/bottom_options.dart';
 import 'bottom_sheet_widgets/bottom_options_ui.dart';
+import 'bottomsheet_task_add.dart';
 
 class BottomSheetTodoEventOptions extends StatefulHookConsumerWidget {
   const BottomSheetTodoEventOptions({required this.scrollController, required this.parentContext, super.key});
@@ -36,13 +37,20 @@ class _BottomSheetTodoEventOptionsState extends ConsumerState<BottomSheetTodoEve
   late final options = <BottomOptions<TodoEventOptions>>[
     BottomOptions(
       id: TodoEventOptions.AddTodo,
-      title: _localizations.addNewTask,
+      title: _localizations.createNewTask,
       icon: FontAwesomeIcons.circlePlus,
       onTap: () {
         NavigationUtils.instance.moveToCreateTaskScreen(context: context);
       },
     ),
-    BottomOptions(id: TodoEventOptions.GetSharedTodo, title: _localizations.joinTask, icon: FontAwesomeIcons.diagramSuccessor, onTap: () {}),
+    BottomOptions(
+      id: TodoEventOptions.GetSharedTodo,
+      title: _localizations.joinTask,
+      icon: FontAwesomeIcons.diagramSuccessor,
+      onTap: () {
+        BottomSheetTaskAdd.show(context);
+      },
+    ),
   ];
 
   @override

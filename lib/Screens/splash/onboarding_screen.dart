@@ -285,20 +285,6 @@ class _OnBoardingScreenState extends ConsumerState<OnBoardingScreen>
             ),
           ],
         ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: InkWell(
-            onTap: () {
-              NavigationUtils.instance
-                  .onBoardingCompleted(context, isSkip: true);
-            },
-            child: const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text('Skip'),
-            ),
-          ),
-        ),
       ],
     );
   }

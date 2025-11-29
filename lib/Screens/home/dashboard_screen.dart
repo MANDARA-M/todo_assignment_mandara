@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../constants/app_color.dart';
 import '../../extensions/state_extensions.dart';
 import '../../gen/assets.gen.dart';
+import '../../l10n/app_localizations.dart';
 import '../../navigation/navigation_utils.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/theme_provider.dart';
@@ -27,6 +28,9 @@ class DashboardScreen extends StatefulHookConsumerWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+
+  late final _localizations = AppLocalizations.of(context)!;
+
   AuthenticationProvider? _authProvider;
   ThemeProvider? _theme;
 
@@ -226,9 +230,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     _authProvider?.observerLogin(
       context,
       loginSuccess: (session) {
-        if (_authProvider?.user != null) {
-          NavigationUtils.instance.moveToProfileScreen(context: context);
-        }
+        NavigationUtils.instance.moveToProfileScreen(context: context);
       },
     );
   }
