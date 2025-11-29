@@ -171,7 +171,7 @@ class _TabsApplicationState extends ConsumerState<TabsApplication> with SingleTi
           .map((e) => Tab(
                   child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text(e.title),
+                child: Text(e.title ?? ''),
               )))
           .toList(),
     );

@@ -8,6 +8,6 @@ class TabMetaData {
   });
 
   final String? id;
-  final String title;
+  final String? title;
   final Widget child;
 }

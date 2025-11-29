@@ -48,5 +48,18 @@
   "youWentOffline": "ನೀವು ಆಫ್‌ಲೈನ್ ಆಗಿದ್ದೀರಿ",
   "youWentOfflineSupportText": "ನಿಮ್ಮಲ್ಲಿ ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಇಲ್ಲ ಅಥವಾ ಸಿಗ್ನಲ್ ತುಂಬಾ ದುರ್ಬಲವಾಗಿದೆ.",
   "errorEmptyInput": "ಕ್ಷೇತ್ರ ಖಾಲಿ ಇರಬಾರದು!",
-  "ok": "ಸರಿ"
+  "ok": "ಸರಿ",
+  "add": "ಸೇರಿಸಿ",
+  "addTask": "ಕಾರ್ಯ ಸೇರಿಸಿ",
+  "enterTitle": "ಶೀರ್ಷಿಕೆ ನಮೂದಿಸಿ",
+  "pleaseEnterTitle": "ದಯವಿಟ್ಟು ಶೀರ್ಷಿಕೆ ನಮೂದಿಸಿ",
+  "titleMustBeAtLeast": "ಶೀರ್ಷಿಕೆ ಕನಿಷ್ಠ 5 ಅಕ್ಷರಗಳಿರಬೇಕು",
+  "createTaskTitleNote": "ಫೀಚರ್‌ಗಾಗಿ ಚಿಕ್ಕ ಮತ್ತು ಸ್ಪಷ್ಟ ಶೀರ್ಷಿಕೆ ಸೇರಿಸಿ.",
+  "enterDescription": "ವಿವರಣೆ ನಮೂದಿಸಿ",
+  "pleaseEnterDescription": "ದಯವಿಟ್ಟು ವಿವರವನ್ನು ನಮೂದಿಸಿ",
+  "descriptionMustBeAtLeast": "ವಿವರಣೆ ಕನಿಷ್ಠ 20 ಅಕ್ಷರಗಳಿರಬೇಕು",
+  "createTaskDescriptionNote": "ಮುಖ್ಯ ಅಂಶಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತವಾಗಿ ವಿವರಿಸಿ.",
+  "changeLanguage": "ಭಾಷೆ ಬದಲಾಯಿಸಿ",
+  "changeTheme": "ಥೀಮ್ ಬದಲಾಯಿಸಿ",
+  "logout": "ಲಾಗೌಟ್"
 }

@@ -28,7 +28,7 @@ class DashboardScreen extends StatefulHookConsumerWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-  late final _localizations = AppLocalizations.of(context)!;
+  AppLocalizations? _localizations;
 
   AuthenticationProvider? _authProvider;
   ThemeProvider? _theme;
@@ -48,8 +48,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
   final _keyHome = GlobalKey<AppHomeScreenState>();
 
-  bool _isDataInitialized = false;
-
   @override
   void dispose() {
     _scrollController.dispose();
@@ -57,28 +55,31 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   }
 
   void initData() {
-    if (!_isDataInitialized) {
-      _isDataInitialized = true;
-      _refreshTabs();
-      refresh;
-    }
+    _refreshTabs();
+    refresh;
   }
 
   void _refreshTabs() {
     _bottomNavigationBarItems.clear();
     _bottomNavigationBarItems.addAll([
-      _bottomNavigationBarItem(label: _localizations.home, iconData: FluentIcons.home_12_regular, iconDataActive: FluentIcons.home_12_filled),
-      _bottomNavigationBarItem(label: _localizations.search, iconData: FluentIcons.search_12_regular, iconDataActive: FluentIcons.search_12_filled),
+      _bottomNavigationBarItem(label: _localizations?.home, iconData: FluentIcons.home_12_regular, iconDataActive: FluentIcons.home_12_filled),
+      _bottomNavigationBarItem(label: _localizations?.search, iconData: FluentIcons.search_12_regular, iconDataActive: FluentIcons.search_12_filled),
       BottomNavigationBarItem(
-        label: _localizations.create,
+        label: _localizations?.create,
         icon: CreateFloatingButton(size: 24, backgroundColor: AppColor.themeColorPrimaryCommon),
       ),
-      _bottomNavigationBarItem(label: _localizations.chart, iconData: FontAwesomeIcons.chartSimple, iconDataActive: FontAwesomeIcons.chartSimple),
-      BottomNavigationBarItem(label: _localizations.profile, icon: _profileWidget),
+      _bottomNavigationBarItem(label: _localizations?.chart, iconData: FontAwesomeIcons.chartSimple, iconDataActive: FontAwesomeIcons.chartSimple),
+      BottomNavigationBarItem(label: _localizations?.profile, icon: _profileWidget),
     ]);
 
     _homeNavigationScreens.clear();
-    _homeNavigationScreens.addAll([AppHomeScreen(key: _keyHome), const DemoHomeScreen(), Container(), const DemoHomeScreen(), Container()]);
+    _homeNavigationScreens.addAll([
+      AppHomeScreen(key: _keyHome),
+      DemoHomeScreen(title: _localizations?.search),
+      Container(),
+      DemoHomeScreen(title: _localizations?.chart),
+      Container(),
+    ]);
 
     _navigatorKeys.clear();
     _navigatorKeys.addAll(List.generate(_bottomNavigationBarItems.length, (_) => GlobalKey<NavigatorState>()));
@@ -90,6 +91,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _localizations = AppLocalizations.of(context);
     _authProvider = ref.watch(authenticationProvider);
     _theme = ref.watch(themeProvider);
 

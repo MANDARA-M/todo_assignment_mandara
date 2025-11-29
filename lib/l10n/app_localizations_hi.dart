@@ -12,6 +12,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get home => 'होम';
 
   @override
+  String get tasks => 'Tasks';
+
+  @override
   String get search => 'खोजें';
 
   @override
@@ -164,4 +167,45 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get ok => 'ठीक है';
+
+  @override
+  String get add => 'जोड़ें';
+
+  @override
+  String get addTask => 'कार्य जोड़ें';
+
+  @override
+  String get enterTitle => 'शीर्षक दर्ज करें';
+
+  @override
+  String get pleaseEnterTitle => 'कृपया एक शीर्षक दर्ज करें';
+
+  @override
+  String get titleMustBeAtLeast => 'शीर्षक कम से कम 5 अक्षरों का होना चाहिए';
+
+  @override
+  String get createTaskTitleNote => 'फ़ीचर के लिए छोटा और सटीक शीर्षक जोड़ें।';
+
+  @override
+  String get enterDescription => 'विवरण दर्ज करें';
+
+  @override
+  String get pleaseEnterDescription => 'कृपया विवरण दर्ज करें';
+
+  @override
+  String get descriptionMustBeAtLeast =>
+      'विवरण कम से कम 20 अक्षरों का होना चाहिए';
+
+  @override
+  String get createTaskDescriptionNote =>
+      'मुख्य बिंदुओं को संक्षेप में समझाएँ।';
+
+  @override
+  String get changeLanguage => 'भाषा बदलें';
+
+  @override
+  String get changeTheme => 'थीम बदलें';
+
+  @override
+  String get logout => 'लॉगआउट';
 }

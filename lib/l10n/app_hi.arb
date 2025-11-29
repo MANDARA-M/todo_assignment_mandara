@@ -48,5 +48,18 @@
   "youWentOffline": "आप ऑफ़लाइन हो गए",
   "youWentOfflineSupportText": "ऐसा लगता है कि आपके पास इंटरनेट कनेक्शन नहीं है, या आपका सिग्नल बहुत कमजोर है।",
   "errorEmptyInput": "फ़ील्ड खाली नहीं हो सकता!",
-  "ok": "ठीक है"
+  "ok": "ठीक है",
+  "add": "जोड़ें",
+  "addTask": "कार्य जोड़ें",
+  "enterTitle": "शीर्षक दर्ज करें",
+  "pleaseEnterTitle": "कृपया एक शीर्षक दर्ज करें",
+  "titleMustBeAtLeast": "शीर्षक कम से कम 5 अक्षरों का होना चाहिए",
+  "createTaskTitleNote": "फ़ीचर के लिए छोटा और सटीक शीर्षक जोड़ें।",
+  "enterDescription": "विवरण दर्ज करें",
+  "pleaseEnterDescription": "कृपया विवरण दर्ज करें",
+  "descriptionMustBeAtLeast": "विवरण कम से कम 20 अक्षरों का होना चाहिए",
+  "createTaskDescriptionNote": "मुख्य बिंदुओं को संक्षेप में समझाएँ।",
+  "changeLanguage": "भाषा बदलें",
+  "changeTheme": "थीम बदलें",
+  "logout": "लॉगआउट"
 }

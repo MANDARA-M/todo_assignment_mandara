@@ -28,7 +28,7 @@ class CreateTaskScreen extends ConsumerStatefulWidget {
 }
 
 class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with SingleTickerProviderStateMixin {
-  late final _localizations = AppLocalizations.of(context)!;
+  AppLocalizations? _localizations;
 
   late ThemeProvider theme;
 
@@ -98,6 +98,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
 
   @override
   Widget build(BuildContext context) {
+    _localizations = AppLocalizations.of(context);
     theme = ref.watch(themeProvider);
 
     return Scaffold(
@@ -109,7 +110,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
           icon: Icon(FluentIcons.dismiss_24_regular, color: theme.textColor),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Add Todo', style: theme.ts.extTs18.weightBold),
+        title: Text(_localizations?.addTask ?? '', style: theme.ts.extTs18.weightBold),
         centerTitle: true,
       ),
       body: FadeTransition(
@@ -148,7 +149,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
       //child: Assets.svg.iconEmoji.svg(width: 18, height: 18, colorFilter: ColorFilter.mode(_theme.actionIconColor, BlendMode.srcIn)),
       child: Row(
         children: [
-          Expanded(child: Text(_localizations.addIconToTask, style: _headingTextStyle)),
+          Expanded(child: Text(_localizations?.addIconToTask ?? '', style: _headingTextStyle)),
           Margin.horizontal8,
           _selectedEmoji != null
               ? Text(_selectedEmoji!, style: theme.ts.copyWith(fontSize: 28))
@@ -170,9 +171,9 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
   }
 
   Widget _buildCommonField({
-    required String title,
-    required String hintText,
-    required String infoNoteText,
+    required String? title,
+    required String? hintText,
+    required String? infoNoteText,
     required int maxLength,
     required int maxLines,
     required String? Function(String?)? validator,
@@ -181,7 +182,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: _headingTextStyle),
+        Text(title ?? '', style: _headingTextStyle),
         const SizedBox(height: 8),
         TextFormField(
           controller: controller,
@@ -223,7 +224,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
             Text('💡', style: theme.ts.extTs12),
             const SizedBox(width: 6),
             Expanded(
-              child: Text(infoNoteText, style: theme.ts.extTs12.copyWith(color: theme.textColor.withValues(alpha: 0.6), height: 1.4)),
+              child: Text(infoNoteText ?? '', style: theme.ts.extTs12.copyWith(color: theme.textColor.withValues(alpha: 0.6), height: 1.4)),
             ),
           ],
         ),
@@ -232,13 +233,13 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
   }
 
   Widget get _buildTitleField {
-    final title = 'Enter Title';
+    final title = _localizations?.enterTitle;
     final validator = (value) {
       if (value == null || value.trim().isEmpty) {
-        return 'Please enter a title';
+        return _localizations?.pleaseEnterTitle;
       }
       if (value.trim().length < 5) {
-        return 'Title must be at least 5 characters';
+        return _localizations?.titleMustBeAtLeast;
       }
       return null;
     };
@@ -246,7 +247,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
     return _buildCommonField(
       title: title,
       hintText: title,
-      infoNoteText: 'Add short and precise title for the feature.',
+      infoNoteText: _localizations?.createTaskTitleNote,
       maxLength: 100,
       maxLines: 1,
       validator: validator,
@@ -255,13 +256,13 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
   }
 
   Widget get _buildDescriptionField {
-    final title = 'Enter Description';
+    final title = _localizations?.enterDescription;
     final validator = (value) {
       if (value == null || value.trim().isEmpty) {
-        return 'Please enter a description';
+        return _localizations?.pleaseEnterDescription;
       }
       if (value.trim().length < 20) {
-        return 'Description must be at least 20 characters';
+        return _localizations?.descriptionMustBeAtLeast;
       }
       return null;
     };
@@ -269,7 +270,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
     return _buildCommonField(
       title: title,
       hintText: title,
-      infoNoteText: 'Explain the key aspects of it with short details.',
+      infoNoteText: _localizations?.createTaskDescriptionNote,
       maxLength: 1000,
       maxLines: 6,
       validator: validator,
@@ -349,7 +350,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> with Single
                     boxShadow: [BoxShadow(color: theme.getBottomSheetActionColor(false).withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4))],
                   ),
                   child: Text(
-                    'Add',
+                    _localizations?.add ?? '',
                     textAlign: TextAlign.center,
                     style: theme.ts.extTs16.weightBold.copyWith(color: Colors.white, letterSpacing: 0.5),
                   ),

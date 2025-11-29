@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "home": "Home",
+  "tasks": "Tasks",
   "search": "Search",
   "create": "Create",
   "chart": "Chart",
@@ -48,5 +49,18 @@
   "youWentOffline": "You went offline",
   "youWentOfflineSupportText": "It seems you don’t have an internet connection, or your signal is too low.",
   "errorEmptyInput": "Field can not be empty!",
-  "ok": "ok"
+  "ok": "ok",
+  "add": "Add",
+  "addTask": "Add Task",
+  "enterTitle": "Enter Title",
+  "pleaseEnterTitle": "Please enter a title",
+  "titleMustBeAtLeast": "Title must be at least 5 characters",
+  "createTaskTitleNote": "Add short and precise title for the feature.",
+  "enterDescription": "Enter Description",
+  "pleaseEnterDescription": "Please enter a description",
+  "descriptionMustBeAtLeast": "Description must be at least 20 characters",
+  "createTaskDescriptionNote": "Explain the key aspects of it with short details.",
+  "changeLanguage": "Change Language",
+  "changeTheme": "Change Theme",
+  "logout": "Logout"
 }

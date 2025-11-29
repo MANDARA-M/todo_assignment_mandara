@@ -12,6 +12,9 @@ class AppLocalizationsKn extends AppLocalizations {
   String get home => 'ಮುಖಪುಟ';
 
   @override
+  String get tasks => 'Tasks';
+
+  @override
   String get search => 'ಹುಡುಕಿ';
 
   @override
@@ -166,4 +169,45 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get ok => 'ಸರಿ';
+
+  @override
+  String get add => 'ಸೇರಿಸಿ';
+
+  @override
+  String get addTask => 'ಕಾರ್ಯ ಸೇರಿಸಿ';
+
+  @override
+  String get enterTitle => 'ಶೀರ್ಷಿಕೆ ನಮೂದಿಸಿ';
+
+  @override
+  String get pleaseEnterTitle => 'ದಯವಿಟ್ಟು ಶೀರ್ಷಿಕೆ ನಮೂದಿಸಿ';
+
+  @override
+  String get titleMustBeAtLeast => 'ಶೀರ್ಷಿಕೆ ಕನಿಷ್ಠ 5 ಅಕ್ಷರಗಳಿರಬೇಕು';
+
+  @override
+  String get createTaskTitleNote =>
+      'ಫೀಚರ್‌ಗಾಗಿ ಚಿಕ್ಕ ಮತ್ತು ಸ್ಪಷ್ಟ ಶೀರ್ಷಿಕೆ ಸೇರಿಸಿ.';
+
+  @override
+  String get enterDescription => 'ವಿವರಣೆ ನಮೂದಿಸಿ';
+
+  @override
+  String get pleaseEnterDescription => 'ದಯವಿಟ್ಟು ವಿವರವನ್ನು ನಮೂದಿಸಿ';
+
+  @override
+  String get descriptionMustBeAtLeast => 'ವಿವರಣೆ ಕನಿಷ್ಠ 20 ಅಕ್ಷರಗಳಿರಬೇಕು';
+
+  @override
+  String get createTaskDescriptionNote =>
+      'ಮುಖ್ಯ ಅಂಶಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತವಾಗಿ ವಿವರಿಸಿ.';
+
+  @override
+  String get changeLanguage => 'ಭಾಷೆ ಬದಲಾಯಿಸಿ';
+
+  @override
+  String get changeTheme => 'ಥೀಮ್ ಬದಲಾಯಿಸಿ';
+
+  @override
+  String get logout => 'ಲಾಗೌಟ್';
 }

@@ -24,7 +24,7 @@ class ProfileScreen extends StatefulHookConsumerWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> with SingleTickerProviderStateMixin {
-  late final _localizations = AppLocalizations.of(context)!;
+  AppLocalizations? _localizations;
 
   late ThemeProvider theme;
   late AuthenticationProvider _authProvider;
@@ -37,12 +37,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
+    _localizations = AppLocalizations.of(context);
     theme = ref.watch(themeProvider);
     _authProvider = ref.watch(authenticationProvider);
 
     return Scaffold(
       appBar: AppBarWidget(
-        title: _localizations.profile,
+        title: _localizations?.profile,
         icons: [AppbarIcon(iconData: FontAwesomeIcons.ellipsisVertical, onPressed: null)],
       ),
       body: _mainWidget,
@@ -58,7 +59,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with SingleTicker
           Margin.vertical16,
           Text(user?.phoneNumber ?? '', style: theme.ts.extTs36),
           Margin.vertical16,
+          Divider(),
+          Margin.vertical32,
           _changeLanguage,
+          Margin.vertical32,
+          _changeThemeButton,
           Margin.vertical32,
           _logoutButton,
         ],
@@ -69,7 +74,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with SingleTicker
   Widget get _changeLanguage {
     return Row(
       children: [
-        Text('Change Language', style: theme.ts.extTs16,),
+        Text(_localizations?.changeLanguage ?? '', style: theme.ts.extTs16,),
         Spacer(),
         ..._languageWidget,
       ],
@@ -100,8 +105,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with SingleTicker
   }
 
   Widget get _logoutButton {
-    return ButtonWidget(title: 'Logout', prefixIcon: Icons.logout, type: .red, onPressed: () {
+    return ButtonWidget(title: _localizations?.logout ?? '', prefixIcon: Icons.logout, type: .red, onPressed: () {
       _authProvider.logout(context);
+    });
+  }
+
+
+  Widget get _changeThemeButton {
+    return ButtonWidget(title: _localizations?.changeTheme ?? '', prefixIcon: Icons.color_lens_outlined, type: .hollow, onPressed: () {
+      theme.toggleTheme();
     });
   }
 }

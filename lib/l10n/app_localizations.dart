@@ -106,6 +106,12 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get home;
 
+  /// No description provided for @tasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get tasks;
+
   /// No description provided for @search.
   ///
   /// In en, this message translates to:
@@ -393,6 +399,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'ok'**
   String get ok;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @addTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Task'**
+  String get addTask;
+
+  /// No description provided for @enterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Title'**
+  String get enterTitle;
+
+  /// No description provided for @pleaseEnterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a title'**
+  String get pleaseEnterTitle;
+
+  /// No description provided for @titleMustBeAtLeast.
+  ///
+  /// In en, this message translates to:
+  /// **'Title must be at least 5 characters'**
+  String get titleMustBeAtLeast;
+
+  /// No description provided for @createTaskTitleNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Add short and precise title for the feature.'**
+  String get createTaskTitleNote;
+
+  /// No description provided for @enterDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Description'**
+  String get enterDescription;
+
+  /// No description provided for @pleaseEnterDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a description'**
+  String get pleaseEnterDescription;
+
+  /// No description provided for @descriptionMustBeAtLeast.
+  ///
+  /// In en, this message translates to:
+  /// **'Description must be at least 20 characters'**
+  String get descriptionMustBeAtLeast;
+
+  /// No description provided for @createTaskDescriptionNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain the key aspects of it with short details.'**
+  String get createTaskDescriptionNote;
+
+  /// No description provided for @changeLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Language'**
+  String get changeLanguage;
+
+  /// No description provided for @changeTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Theme'**
+  String get changeTheme;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
 }
 
 class _AppLocalizationsDelegate

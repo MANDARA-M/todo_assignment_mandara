@@ -12,6 +12,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home => 'Home';
 
   @override
+  String get tasks => 'Tasks';
+
+  @override
   String get search => 'Search';
 
   @override
@@ -164,4 +167,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ok => 'ok';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get addTask => 'Add Task';
+
+  @override
+  String get enterTitle => 'Enter Title';
+
+  @override
+  String get pleaseEnterTitle => 'Please enter a title';
+
+  @override
+  String get titleMustBeAtLeast => 'Title must be at least 5 characters';
+
+  @override
+  String get createTaskTitleNote =>
+      'Add short and precise title for the feature.';
+
+  @override
+  String get enterDescription => 'Enter Description';
+
+  @override
+  String get pleaseEnterDescription => 'Please enter a description';
+
+  @override
+  String get descriptionMustBeAtLeast =>
+      'Description must be at least 20 characters';
+
+  @override
+  String get createTaskDescriptionNote =>
+      'Explain the key aspects of it with short details.';
+
+  @override
+  String get changeLanguage => 'Change Language';
+
+  @override
+  String get changeTheme => 'Change Theme';
+
+  @override
+  String get logout => 'Logout';
 }

@@ -19,7 +19,7 @@ class AppHomeScreenState extends ConsumerState<AppHomeScreen> with AutomaticKeep
   @override
   bool get wantKeepAlive => true;
 
-  late final _localizations = AppLocalizations.of(context)!;
+  AppLocalizations? _localizations;
 
   final homeTabMetaData = <HomeTabsMetaData>[];
 
@@ -45,13 +45,14 @@ class AppHomeScreenState extends ConsumerState<AppHomeScreen> with AutomaticKeep
 
     final _todoOwnTab = HomeTabsMetaData(
       key: _keyTodoOwn,
-      child: TabMetaData(title: _localizations.created, child: _homeScreen),
+      child: TabMetaData(title: _localizations?.created, child: _homeScreen),
     );
     final _todoJoinedTab = HomeTabsMetaData(
       key: _keyTodoJoined,
-      child: TabMetaData(title: _localizations.joined, child: _friendsScreen),
+      child: TabMetaData(title: _localizations?.joined, child: _friendsScreen),
     );
 
+    homeTabMetaData.clear();
     homeTabMetaData.addAll([_todoOwnTab, _todoJoinedTab]);
 
     refresh;
@@ -60,13 +61,16 @@ class AppHomeScreenState extends ConsumerState<AppHomeScreen> with AutomaticKeep
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    _localizations = AppLocalizations.of(context);
 
     if (homeTabMetaData.isEmpty) {
       return const SizedBox.shrink();
     }
 
+    _populateTabs();
+
     return Scaffold(
-      appBar: const AppBarWidget(title: 'Tasks', isDashboard: true),
+      appBar: AppBarWidget(title: _localizations?.tasks, isDashboard: true),
       body: TabsApplication(
         tabMetaData: tabMetaData,
         isTabScrollable: false,
