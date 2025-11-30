@@ -85,22 +85,54 @@ class TodoListScreenState extends State<TodoListScreen> {
   }
 
   Widget _listOfTodos(List<QueryDocumentSnapshot<Task>> todos) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: ListView.separated(
-        separatorBuilder: (context, index) => SizedBox(height: 8),
-        itemCount: todos.length,
-        itemBuilder: (context, index) {
-          final document = todos[index];
-          final docId = document.id;
-          final task = document.data();
+    final child = LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 600) {
+          // Mobile layout
+          return _mobileLayout(todos);
+        } else {
+          // Bigger screen layout
+          return _biggerScreenLayout(todos);
+        }
+      },
+    );
 
-          return ToDoCardWidget(docId: docId, task: task, onTap: () {
-            final routeObject = CreateTaskScreenRouteObject(docId: docId, task: task);
-            NavigationUtils.instance.moveToCreateTaskScreen(context: context, routeObject: routeObject);
-          });
-        },
-      ),
+    return Padding(padding: const EdgeInsets.all(12.0), child: child);
+  }
+
+  Widget _mobileLayout(List<QueryDocumentSnapshot<Task>> todos) {
+    return ListView.separated(
+      separatorBuilder: (context, index) => SizedBox(height: 8),
+      itemCount: todos.length,
+      itemBuilder: (context, index) {
+        final document = todos[index];
+        return _taskWidget(document: document);
+      },
+    );
+  }
+
+  Widget _biggerScreenLayout(List<QueryDocumentSnapshot<Task>> todos) {
+    return GridView.builder(
+      itemCount: todos.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1.0, crossAxisSpacing: 8.0, mainAxisSpacing: 8.0),
+      itemBuilder: (BuildContext context, int index) {
+        final document = todos[index];
+        return _taskWidget(document: document);
+      },
+    );
+  }
+
+  Widget _taskWidget({required QueryDocumentSnapshot<Task> document}) {
+    final docId = document.id;
+    final task = document.data();
+
+    return ToDoCardWidget(
+      docId: docId,
+      task: task,
+      onTap: () {
+        final routeObject = CreateTaskScreenRouteObject(docId: docId, task: task);
+        NavigationUtils.instance.moveToCreateTaskScreen(context: context, routeObject: routeObject);
+      },
     );
   }
 }

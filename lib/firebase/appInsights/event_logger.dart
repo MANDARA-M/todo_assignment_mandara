@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../enums/app_enums_analytics.dart';
@@ -15,13 +16,17 @@ class EventLogger {
   static final EventLogger instance = _instance ??= EventLogger._();
 
   Future<void> initialize() async {
-    await FirebaseLogger.instance.initialize();
+    if (!kIsWeb) {
+      await FirebaseLogger.instance.initialize();
+    }
   }
 
   Future<void> setSession({required String phoneNumber}) async {
-    await FirebaseLogger.instance.setSession(phoneNumber: phoneNumber);
+    if (!kIsWeb) {
+      await FirebaseLogger.instance.setSession(phoneNumber: phoneNumber);
 
-    _logCommonEvent(event: AnalyticsEvents.session_change_user_data);
+      _logCommonEvent(event: AnalyticsEvents.session_change_user_data);
+    }
   }
 
   Future<void> changeTheme(ThemeMode themeMode) async {}
@@ -31,6 +36,9 @@ class EventLogger {
     AnalyticsType analyticsType = AnalyticsType.business,
     Map<String, dynamic>? eventProperties,
   }) {
+    if (kIsWeb) {
+      return;
+    }
     try {
       final isAnalyticsActive = AppUtils.instance.isRelease && analyticsType.isEnabled;
       if (!isAnalyticsActive) {
@@ -67,7 +75,12 @@ class EventLogger {
     _logCommonEvent(event: event, analyticsType: analyticsType, eventProperties: parameters);
   }
 
-  void logError({required dynamic exception, StackTrace? stackTrace, dynamic reason, bool fatal = false}) =>
-      FirebaseLogger.instance.logError(exception: exception, stackTrace: stackTrace, reason: reason, fatal: fatal);
+  void logError({required dynamic exception, StackTrace? stackTrace, dynamic reason, bool fatal = false}) {
+    if (kIsWeb) {
+      return;
+    }
+
+    FirebaseLogger.instance.logError(exception: exception, stackTrace: stackTrace, reason: reason, fatal: fatal);
+  }
 
 }
