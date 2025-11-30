@@ -1,10 +1,10 @@
+import 'package:Task_ToDo/Screens/todo/todo_card_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:inSTA/Screens/todo/todo_card_widget.dart';
-import 'package:inSTA/navigation/navigation_utils.dart';
 
 import '../../enums/app_enums.dart';
 import '../../firebase/services/data_service.dart';
+import '../../navigation/navigation_utils.dart';
 import '../../navigation/router_configs.dart';
 import '../../network/models/todo/task.dart';
 

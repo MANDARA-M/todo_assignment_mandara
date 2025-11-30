@@ -1,8 +1,8 @@
 import 'package:go_router/go_router.dart';
-import 'package:inSTA/Screens/create/create_task_screen.dart';
 
 import '../Screens/account/login_screen.dart';
 import '../Screens/account/otp_screen.dart';
+import '../Screens/create/create_task_screen.dart';
 import '../Screens/home/dashboard_screen.dart';
 import '../Screens/profile/profile_screen.dart';
 import '../Screens/splash/onboarding_screen.dart';
@@ -20,10 +20,7 @@ class RouterConfigs {
   final routerConfig = GoRouter(
     initialLocation: AppRoute.splash.path,
     routes: [
-      AppRoute.splash.getAnimatedRoute(
-        builder: (context, state) => AppUtils.instance.isMobile ? const SplashScreen() : const ConnectivityWidgetWrapper(child: SplashScreen()),
-        animationType: AnimationType.fade,
-      ),
+      AppRoute.splash.getAnimatedRoute(builder: (context, state) => const SplashScreen(), animationType: AnimationType.fade),
       AppRoute.onboarding.getAnimatedRoute(builder: (context, state) => const OnBoardingScreen()),
       AppRoute.login.getAnimatedRoute(builder: (context, state) => const LoginScreen()),
       AppRoute.otp.getAnimatedRoute(

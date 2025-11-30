@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:inSTA/navigation/navigation_utils.dart';
 
 import '../../common_widgets/bottom_sheet/bottom_sheet.dart';
 import '../../enums/app_enums.dart';
 import '../../l10n/app_localizations.dart';
+import '../../navigation/navigation_utils.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
 import 'bottom_sheet_model/bottom_options.dart';

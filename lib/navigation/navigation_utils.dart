@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../common_widgets/issue_screen.dart';
@@ -16,7 +17,13 @@ class NavigationUtils extends NavigationUtilsBase {
 
   static final NavigationUtils instance = NavigationUtils._();
 
-  void restart(BuildContext context) => moveToRoute(context: context, route: AppRoute.splash, isRemoveAllOtherScreens: true);
+  void restart(BuildContext context) {
+    if (kIsWeb) {
+      moveToRoute(context: context, route: AppRoute.splash, isRemoveAllOtherScreens: true);
+    } else {
+      moveToRoute(context: context, route: AppRoute.splash, isRemoveAllOtherScreens: true);
+    }
+  }
 
   Future<void> showInternetIssueScreen(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;

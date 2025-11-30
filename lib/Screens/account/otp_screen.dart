@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:inSTA/navigation/navigation_utils.dart';
-import 'package:inSTA/utilities/app_utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../common_widgets/button_widget.dart';
@@ -12,10 +10,12 @@ import '../../constants/margin.dart';
 import '../../enums/app_enums.dart';
 import '../../extensions/state_extensions.dart';
 import '../../l10n/app_localizations.dart';
+import '../../navigation/navigation_utils.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
 import '../../theme/theme_utils.dart';
+import '../../utilities/app_utils.dart';
 import '../../utilities/print_util.dart';
 import '../../utilities/toast_utils.dart';
 

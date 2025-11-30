@@ -17,31 +17,30 @@ class FirebaseUtil {
 
 class PlatformHandler {
   static Future<void> initializeApp(Widget app) async {
-    if (kIsWeb) {
-      runApp(app);
-    } else {
-      await runZonedGuarded(
-        () async {
-          WidgetsFlutterBinding.ensureInitialized();
-          await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-          await FirebaseAuth.instance.setSettings(forceRecaptchaFlow: false);
+    await runZonedGuarded(
+      () async {
+        WidgetsFlutterBinding.ensureInitialized();
+        await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+        await FirebaseAuth.instance.setSettings(forceRecaptchaFlow: false);
 
+        if (!kIsWeb) {
           FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-
           // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
           PlatformDispatcher.instance.onError = (error, stack) {
             FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
             return true;
           };
+        }
 
-          await EventLogger.instance.initialize();
+        await EventLogger.instance.initialize();
 
-          runApp(app);
-        },
-        (error, stackTrace) {
+        runApp(app);
+      },
+      (error, stackTrace) {
+        if (!kIsWeb) {
           FirebaseCrashlytics.instance.recordError(error, stackTrace);
-        },
-      );
-    }
+        }
+      },
+    );
   }
 }

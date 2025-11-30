@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -52,8 +53,11 @@ class FirebaseLogger {
     await _appendSessionMetaData(parameters);
   }
 
-  void logError({required dynamic exception, StackTrace? stackTrace, dynamic reason, bool fatal = false}) =>
+  void logError({required dynamic exception, StackTrace? stackTrace, dynamic reason, bool fatal = false}) {
+    if (!kIsWeb) {
       FirebaseCrashlytics.instance.recordError(exception, stackTrace, reason: reason, fatal: fatal);
+    }
+  }
 
   void logEvent(String name, {required Map<String, Object> parameters}) {
     final stringParameters = _formatParameters(parameters);

@@ -7,9 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'providers/language_provider.dart';
 
 import 'common_widgets/waiting_screen_widget.dart';
-import 'constants/constant.dart';
 import 'enums/app_enums.dart';
-import 'extensions/constant_extensions.dart';
 import 'firebase/firebase_util.dart';
 import 'l10n/app_localizations.dart';
 import 'navigation/router_configs.dart';
@@ -67,10 +65,6 @@ class _InitializerWidgetState extends ConsumerState<InitializerWidget> {
   }
 
   Future<void> _appInitialize() async {
-    if (mounted) {
-      Constant.instance.init(context);
-    }
-
     await auth.initializeUser();
 
     if (mounted) {

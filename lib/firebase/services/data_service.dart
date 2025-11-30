@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:inSTA/utilities/storage/shared_preference/shared_preferences_util.dart';
 
 import '../../network/models/todo/task.dart';
+import '../../utilities/storage/shared_preference/shared_preferences_util.dart';
 
 const String toDoCollection = 'todos';
 

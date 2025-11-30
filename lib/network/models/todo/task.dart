@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:inSTA/enums/app_enums.dart';
-import 'package:inSTA/utilities/storage/shared_preference/shared_preferences_util.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../enums/app_enums.dart';
+import '../../../utilities/storage/shared_preference/shared_preferences_util.dart';
 import '../../converters/timestamp_converter.dart';
 
 part 'task.g.dart';

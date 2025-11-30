@@ -2,9 +2,8 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:inSTA/constants/margin.dart';
-import 'package:inSTA/utilities/share_utils.dart';
 
+import '../../constants/margin.dart';
 import '../../extensions/state_extensions.dart';
 import '../../firebase/services/data_service.dart';
 import '../../l10n/app_localizations.dart';
@@ -12,6 +11,7 @@ import '../../network/models/todo/task.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/utils/provider_utility.dart';
 import '../../theme/theme_utils.dart';
+import '../../utilities/share_utils.dart';
 
 class ToDoCardWidget extends ConsumerStatefulWidget {
   const ToDoCardWidget({required this.docId, required this.task, this.onTap, this.isActive = true, super.key});

@@ -1,13 +1,14 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:restart/restart.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inSTA/utilities/print_util.dart';
 
 import '../enums/app_enums.dart';
 import '../firebase/appInsights/event_logger.dart';
 import '../navigation/navigation_utils.dart';
+import '../utilities/print_util.dart';
 import '../utilities/storage/shared_preference/shared_preferences_util.dart';
 
 typedef LoginSuccess = void Function(User? user);
@@ -149,6 +150,10 @@ class AuthenticationProvider extends ChangeNotifier {
     await FirebaseAuth.instance.signOut();
     await SharedPreferencesUtil.instance.logout();
     await _logoutSession();
-    await restart();
+    if (kIsWeb) {
+      NavigationUtils.instance.moveToSplashScreen(context: context);
+    } else {
+      await restart();
+    }
   }
 }
